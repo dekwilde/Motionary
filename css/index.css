@@ -1,0 +1,62 @@
+/*abcdefghijklmnopqrstuvwxyz*/
+ul{
+	font-family: "Avenir", "Futura", sans-serif;
+	margin: 0 auto;
+}
+
+li{
+	list-style: none;
+	display: inline;
+	font-size: 16px;
+}
+
+.area_body{
+	background-color: #ecf0f1;
+	padding: 10px;
+	margin: 60px auto;
+	border-bottom: 1px dotted lightgray;
+	border-top: 1px dotted lightgray;
+
+	/*border-radius: 3px;*/
+}
+
+#area_motion{
+	height: 600px;
+	width: 500px;
+	/*background-color: #f39c12;*/
+	/*border: 4px solid #FF0000;*/
+	text-align: center;
+	background-color: rgb(64, 64, 64);
+	border-radius: 3px;
+	margin: 10px auto;
+	color: white;
+}
+
+
+.bs-footer{
+	text-align: center;
+	padding: 50px;
+	border-top: 1px solid #e5e5e5;
+}
+
+
+.center{
+	margin: 0 auto;
+}
+
+
+.jumbotron{
+	text-align: center;
+}
+
+.navbar{
+	opacity: 0.9;
+}
+
+#singleFieldTags{
+	background-color: white;
+}
+
+#sign-btn{
+	margin-left: 10px;
+}
