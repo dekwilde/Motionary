@@ -43,7 +43,7 @@
   }
 
   // //return the array
-  // foreach ($mtnArr as $key => $value) {
-  // 	// echo $key.": ".$value[0]." ".$value[1]." ".$value[2]." ".$value[3]." ";
-  // }
+  foreach ($mtnArr as $key => $value) {
+  	// echo $key.": ".$value[0]." ".$value[1]." ".$value[2]." ".$value[3]." ";
+  }
 ?>
