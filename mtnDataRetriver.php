@@ -42,8 +42,8 @@
   	array_push($mtnArr, explode(", ", $value));
   }
 
-  //return the array
-  foreach ($mtnArr as $key => $value) {
-  	// echo $key.": ".$value[0]." ".$value[1]." ".$value[2]." ".$value[3]." ";
-  }
+  // //return the array
+  // foreach ($mtnArr as $key => $value) {
+  // 	// echo $key.": ".$value[0]." ".$value[1]." ".$value[2]." ".$value[3]." ";
+  // }
 ?>
