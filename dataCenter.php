@@ -43,9 +43,9 @@
 			$arrs['ip'] = (string)$_SERVER['REMOTE_ADDR'];
 			$arrs['deadline'] = (filter_input(INPUT_POST,'TimeNeeded',FILTER_CALLBACK,array('options'=>'validate_text'))*24*60*60)+time();
 
-			insertVideo($arrs);
+			$alphaid = insertVideo($arrs);
 			
-			echo '{"status":1}'; // return successful msg to the client.
+			echo '{"status":1, "alphaid":"'.$alphaid.'"}'; // return successful msg to the client.
 		}
 
 	}else{

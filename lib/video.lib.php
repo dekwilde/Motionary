@@ -17,8 +17,9 @@
 	}
 
 	function insertVideo($arr){
-		mysql_query("INSERT INTO videoData (ytoutubeID,start,end,owner,tag,deadline,ip,ipTag) VALUES ('"
+		mysql_query("INSERT INTO videoData (ytoutubeID, identity, start,end,owner,tag,deadline,ip,ipTag) VALUES ('"
   		.$arr['ytoutubeID']."',
+   		'".$arr['ytoutubeID']."', 		
   		'".$arr['start']."',
   		'".$arr['end']."',
   		'".$arr['owner']."',
@@ -27,6 +28,12 @@
    		'".$arr['ip']."',
   		'".sprintf('%u',ip2long($arr['ip']))."'
   		)");
+
+		$alpha = alphaID(mysql_insert_id(),false,7, 99623271973);
+
+  		mysql_query("UPDATE videoData SET identity = '".$alpha."' WHERE vid =".mysql_insert_id());
+
+  		return $alpha;
 	}
 
 ?>
