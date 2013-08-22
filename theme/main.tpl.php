@@ -16,6 +16,7 @@ include "connectSql.php";
 	<link rel="stylesheet" type="text/css" href="/kinect/css/index.css" />
 	<link rel="stylesheet" type="text/css" href="/kinect/css/bootstrap.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="/kinect/css/nprogress.css" />
 	
 
 	<!-- JavaScript Library -->
@@ -23,9 +24,10 @@ include "connectSql.php";
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" src="/kinect/js/bootstrap.js"></script>
     <script type="text/javascript" src="/kinect/js/RequestAnimationFrame.js"></script>
+    <script type="text/javascript" src="/kinect/js/lib/nprogress.js"></script>
+
     <script type="text/javascript">
-
-
+    	
     </script>
 </head>
 <body>
