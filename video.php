@@ -19,7 +19,8 @@
 				.$result['ytoutubeID'].'<br/>Owner is '
 				.$result['owner'].'<br/>Request Time is '
 				.$result['requestTime'].'<br/>Deadline is '
-				.$date->format('Y-m-d H:i:s')
+				.$date->format('Y-m-d H:i:s').'<br/>Tag(s) are '
+				.$result['tag']
 				.'<br/><button type="button" class="btn btn-primary disabled"><span class="glyphicon glyphicon-usd"></span>Contribute Your Motion Now!</button>
 			</div>
 		</div>

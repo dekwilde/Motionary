@@ -29,7 +29,7 @@
   		'".sprintf('%u',ip2long($arr['ip']))."'
   		)");
 
-		$alpha = alphaID(mysql_insert_id(),false,7, 9962327197);
+		$alpha = alphaID(mysql_insert_id(),false,7, 'KOvideo99623773in');
 
   		mysql_query("UPDATE videoData SET identity = '".$alpha."' WHERE vid =".mysql_insert_id());
 
