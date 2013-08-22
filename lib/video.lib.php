@@ -36,4 +36,8 @@
   		return $alpha;
 	}
 
+	function searchVideoByID($alphaID){
+		return mysql_query("SELECT * FROM videoData WHERE identity='".$alphaID."'");
+	}
+
 ?>
