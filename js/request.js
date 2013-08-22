@@ -51,7 +51,7 @@ window.onload = function() {
 			$('#btn-request-vid').html('Request');
 			if(msg.status==1){
 				console.log("status "+msg.status);
-				$('.area_body').html('<div class="panel panel-default"><div class="panel-body"><h1>Congradulations!</h1>You have sent a video request successfully.<br/>Your video link is below: <br/><a href="/kinect/video.php/show/'+msg.alphaid+'">Check you request!</a></div></div>');
+				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3"><div class="panel-body"><h1>Congradulations!</h1>You have sent a video request successfully.<br/>Your video link is below: <br/><a href="/kinect/video.php/dtls/'+msg.alphaid+'">Check you request!</a></div></div>');
 			}else{
 				$.each(msg.errors,function(k,v){
 					$('label[for='+k+']').append('<span class="label label-warning">'+v+'</span>');

@@ -11,7 +11,7 @@ $libary = '
     <script type="text/javascript" src="/kinect/js/mtnDataProcessor.js"></script>';
 
 if(isGET('list')){
-	$out['content'] = '這一頁將會列出已經有哪些的request video，可以點進去個別影片頁看已經有哪些motion或自己也可以contribute<a href="http://lockys.hopto.org/kinect/application.php/act"><br/>Kinect骨架資料收集demo頁</a>';
+	$out['content'] = '<a href="http://114.43.199.118/kinect/video.php/dtls/BGGGGGW">http://114.43.199.118/kinect/video.php/dtls/BGGGGGW</a><a href="http://lockys.hopto.org/kinect/application.php/act"><br/>Kinect骨架資料收集demo頁</a>';
 }
 else if(isGET('act')){
 	$out['content'] = $libary.'
