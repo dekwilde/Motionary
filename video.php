@@ -9,6 +9,8 @@
 
 	if(isGET('dtls')&&isLogin()){
 		$alphaid = $_GET['dtls'];
+		
+		//Get video details
 		$result = mysql_fetch_array(searchVideoByID($alphaid));
 		foreach ($result as $key => $value) {
 			$$key = $value;
@@ -17,20 +19,22 @@
 		$userResult = mysql_fetch_array(searchUserBymail($owner));
 
 
+		//operate the video data.
+
 		$unixTime = $deadline;
 		$deadDate = new DateTime("@$unixTime");
 
 		$unixTime = strtotime($requestTime.' GMT');
 		$reqDate = new DateTime("@$unixTime");
-		$reqDate = $reqDate->format('c');
-		$reqDate = explode("+", $reqDate);
+		$reqDate = explode("+", $reqDate->format('c'));
 		// debug($unixTime);
+		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.$reqDate[0].'"></abbr>';
 
 		$content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
 		parse_str($content, $ytarr);
 		// debug($ytarr['title']);
 
-		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.$reqDate[0].'"></abbr>';
+		//output html content.
 
 		$out['content'] = '<div class="panel panel-default col-lg-8 col-lg-offset-2"><div class="row">
 		<div class="panel-body col-lg-5"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;"></div>
@@ -57,7 +61,7 @@
 		</div>
 		</div>';
 	}else{
-
+		
 
 	}
 	require 'footer.php';
