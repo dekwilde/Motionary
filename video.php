@@ -49,7 +49,7 @@
 				
 			</div>
 		</div>
-		<button type="button" class="btn btn-primary btn-lg btn-block">Contribute Your Motion Now!</button>
+		<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>
 		<div class="row">
 			<div class="panel-body">
 				<span class="glyphicon glyphicon-align-justify"></span>There are $var motions...<br/> listMotion($id);

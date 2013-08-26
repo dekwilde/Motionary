@@ -40,4 +40,15 @@
 		return mysql_query("SELECT * FROM videoData WHERE identity='".$alphaID."'");
 	}
 
+
+	function listAllVideo(){
+		$result = mysql_query("SELECT * FROM videoData");
+		$out = '';
+
+		while ($row = mysql_fetch_array($result)) {
+			$out .= '<a href="/kinect/video.php/dtls/'.$row['identity'].'"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" style="width:200px; margin:5px;"></a>';  
+		}
+		return $out;
+	}
+
 ?>

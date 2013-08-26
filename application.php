@@ -11,7 +11,7 @@ $libary = '
     <script type="text/javascript" src="/kinect/js/mtnDataProcessor.js"></script>';
 
 if(isGET('list')){
-	$out['content'] = '<a href="/kinect/video.php/dtls/BGGGGGW">http://114.43.199.118/kinect/video.php/dtls/BGGGGGW</a><a href="http://lockys.hopto.org/kinect/application.php/act"><br/>Kinect骨架資料收集demo頁</a>';
+	$out['content'] = listAllVideo();
 }
 else if(isGET('act')){
 	$out['content'] = $libary.'
