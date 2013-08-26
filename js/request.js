@@ -46,7 +46,9 @@ window.onload = function() {
 		var data = $(this).serialize()+'&tag='+$('#mySingleField').val();
 		console.log(data);
 		$('#btn-request-vid').html('Requesting...');
-		$.post('/kinect/dataCenter.php/reqvid',data,function(msg){
+		NProgress.start();
+		$.post('/kinect/dataProcessor.php/reqvid',data,function(msg){
+			NProgress.done();	
 			working = false;
 			$('#btn-request-vid').html('Request');
 			if(msg.status==1){
@@ -72,7 +74,9 @@ window.onload = function() {
 		var data = $(this).serialize();
 		console.log(data);
 		$('#btn-upd-user').html('Updating...');
-		$.post('/kinect/dataCenter.php/upduser',data,function(msg){
+		NProgress.start();		
+		$.post('/kinect/dataProcessor.php/upduser',data,function(msg){
+			NProgress.done();
 			working = false;
 			$('#btn-upd-user').html('Update your information');
 			if(msg.status==1){

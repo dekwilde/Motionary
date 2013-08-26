@@ -25,9 +25,11 @@ include "connectSql.php";
     <script type="text/javascript" src="/kinect/js/bootstrap.js"></script>
     <script type="text/javascript" src="/kinect/js/RequestAnimationFrame.js"></script>
     <script type="text/javascript" src="/kinect/js/lib/nprogress.js"></script>
-
+    <script type="text/javascript" src="http://timeago.yarp.com/jquery.timeago.js"></script>
     <script type="text/javascript">
-    	
+	    jQuery(document).ready(function() {
+	    	jQuery("abbr.timeago").timeago();
+	    });
     </script>
 </head>
 <body>
