@@ -8,7 +8,6 @@ include "connectSql.php";
 $library = '
   <script type="text/javascript" src="/kinect/js/request.js"></script>
   <script src="/kinect/js/lib/tag-it.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="http://swfobject.googlecode.com/svn/tags/rc3/swfobject/src/swfobject.js" type="text/javascript"></script>
   <link href="/kinect/css/jquery.tagit.css" rel="stylesheet" type="text/css">
   <link href="/kinect/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">';
 

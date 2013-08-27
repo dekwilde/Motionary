@@ -11,10 +11,11 @@ include "connectSql.php";
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Motionary.</title>
+	<title>Motionary - Find the motions you get interested in.</title>
 	<!-- Style Sheet -->
-	<link rel="stylesheet" type="text/css" href="/kinect/css/index.css" />
 	<link rel="stylesheet" type="text/css" href="/kinect/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="/kinect/css/index.css" />
+
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" type="text/css" href="/kinect/css/nprogress.css" />
 	
@@ -26,6 +27,7 @@ include "connectSql.php";
     <script type="text/javascript" src="/kinect/js/RequestAnimationFrame.js"></script>
     <script type="text/javascript" src="/kinect/js/lib/nprogress.js"></script>
     <script type="text/javascript" src="http://timeago.yarp.com/jquery.timeago.js"></script>
+	<script src="http://swfobject.googlecode.com/svn/tags/rc3/swfobject/src/swfobject.js" type="text/javascript"></script>    
     <script type="text/javascript">
 	    jQuery(document).ready(function() {
 	    	jQuery("abbr.timeago").timeago();
@@ -34,41 +36,48 @@ include "connectSql.php";
 </head>
 <body>
 	<div class="navbar navbar-fixed-top navbar-inverse">
-	  <div class="container">
-	  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary_v1.0.1</a>
-	  <ul class="nav navbar-nav">
-	    <li id="link-about"  class="disabled"><a href="/kinect/index.php">About</a></li>	  
-	    <li id="link-contribute"><a href="/kinect/application.php">Contrbute</a></li>
-	    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
-	    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
-	  </ul>
-	  <form class="navbar-form pull-left" action="">
-              <input type="text" class="form-control col-lg-8" placeholder="Search Motion(s)">
-            </form>
-	  <?php
-	  	if(isLogin()){
-	  		$result = mysql_fetch_array(searchUserBymail($_SESSION['mail']));
+		  <div class="container">
 
-	  		echo '<a href="/kinect/logout.php" class="btn btn-default navbar-btn pull-right" id="sign-btn">Log out</a><a href="/kinect/user.php" id="link-user-name" class="btn btn-primary navbar-btn pull-right"><span class="glyphicon glyphicon-user"></span> '.$result['nickName'].'<span class="badge">0</span></a>
-	  		';
-	  	}else{
-	  		echo '<a href="/kinect/login.php" class="btn btn-default navbar-btn pull-right">Sign in with Google</a>';
-	  	}
-	  ?>	
-	  
-	  </div>
+			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary</a>
+			  <ul class="nav navbar-nav">
+			    <li id="link-about"  class="disabled"><a href="/kinect/index.php">About</a></li>	  
+			    <li id="link-contribute"><a href="/kinect/application.php">Contrbute</a></li>
+			    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
+			    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
+			  </ul>
+			  <form class="navbar-form pull-left" action="">
+			  	<input type="text" class="form-control col-lg-8" placeholder="Search Motion(s)">
+			  </form>
+			  <!-- Check if the user log in. -->
+			  <?php
+			  	if(isLogin()){
+			  		$result = mysql_fetch_array(searchUserBymail($_SESSION['mail']));
+
+			  		echo '<a href="/kinect/logout.php" class="btn btn-default navbar-btn pull-right" id="sign-btn">Log out</a><a href="/kinect/user.php" id="link-user-name" class="btn btn-primary navbar-btn pull-right"><span class="glyphicon glyphicon-user"></span> '.$result['nickName'].'<span class="badge">0</span></a>
+			  		';
+			  	}else{
+			  		echo '<a href="/kinect/login.php" class="btn btn-default navbar-btn pull-right">Sign in with Google</a>';
+			  	}
+			  ?>	
+		  
+		  </div>
 	</div>
 
+
+	<!-- Output the html content by php -->
 	<div class="container  area_body">
 			<?php echo $out['content'];?>
 	</div>
-	<div id="pluginContainer">
+
+	<!-- <div id="pluginContainer">
         <object id="zigPlugin" type="application/x-zig" width="0" height="0">
             <param name="onload" value="zigPluginLoaded">
         </object>
-    </div>
+    </div> -->
     <footer class="bs-footer">
-    	2013 Motionary is powered by Zigfu.
+    	2013 Motionary_version_git is powered by <a href="http://zigfu.com/" target="_blank">Zigfu</a>.
     </footer>
+
+    
 </body>
 </html>
