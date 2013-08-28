@@ -40,13 +40,23 @@
 		return mysql_query("SELECT * FROM videoData WHERE identity='".$alphaID."'");
 	}
 
-
+	//for list specified user or all
 	function listAllVideo(){
 		$result = mysql_query("SELECT * FROM videoData");
 		$htmlFrag = '';
+		
 
 		while ($row = mysql_fetch_array($result)) {
-			$htmlFrag .= '<a href="/kinect/video.php/dtls/'.$row['identity'].'"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" style="width:200px; margin:5px;"></a>';  
+			$htmlFrag .= '<div class="col-sm-6 col-md-3" style="margin-bottom:5px;">
+			<a href="/kinect/video.php/dtls/'.$row['identity'].'"><div class="thumbnail">
+			<img src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
+			<div class="caption">'
+				.$row['ytoutubeID'].
+			'</div>
+			</div></a>
+			</div>';
+
+			// $htmlFrag .= '<a href="/kinect/video.php/dtls/'.$row['identity'].'"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" style="width:200px; margin:5px;"><br/>'.$row['ytoutubeID'].'</a>';  
 		}
 		return $htmlFrag;
 	}
