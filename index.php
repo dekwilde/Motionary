@@ -19,3 +19,4 @@ require 'footer.php';
 ?>
 
 <!-- Test Git for Richo -->
+<!-- Test Git for Richo v2.0-->
