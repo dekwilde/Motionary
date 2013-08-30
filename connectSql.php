@@ -2,7 +2,7 @@
 /* Database config */
 	$db_host		= 'localhost';
 	$db_user		= 'locky4567';
-	$db_pass		= 'KO963528LOHAOWEIJENG';
+	$db_pass		= '';
 	$db_database		= 'motionData'; 
 	/* End config */
 
