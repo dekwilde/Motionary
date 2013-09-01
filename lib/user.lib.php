@@ -34,7 +34,7 @@
 	}
 
 	function updateUserBymail($mail,$arr){
-		return mysql_query("UPDATE userData SET firstName = '".$arr['firstName']."', lastName = '".$arr['lastName']."', nickName = '".$arr['nickName']."' WHERE email='".$mail."'");
+		return mysql_query("UPDATE userData SET nickName = '".$arr['nickName']."' WHERE email='".$mail."'");
 	}
 
 	function isLogin()

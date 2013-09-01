@@ -42,13 +42,13 @@
 					<div class="form-group">
 					<label for="lastName" class="col-lg-2 control-label">LastName</label>
 					<div class="col-lg-10">
-					<input type="text" name="lastName" class="form-control" value="'.$result['lastName'].'">
+					<input type="text" name="lastName" id="disabledInput" class="form-control" value="'.$result['lastName'].'" disabled>
 					</div>
 					</div>
 					<div class="form-group">
 					<label for="firstName" class="col-lg-2 control-label">FirstName</label>
 					<div class="col-lg-10">
-					<input type="text" name="firstName" class="form-control" value="'.$result['firstName'].'">
+					<input type="text" name="firstName" id="disabledInput" class="form-control" value="'.$result['firstName'].'" disabled>
 					</div>
 					</div>
 					<div class="form-group">
@@ -66,8 +66,8 @@
 		';
 	}else if(isGET('vid')&&isLogin()){
 		$out['content'] .= '
-		 <div class="col-lg-6">
-			<div class="well well-sm">Your video.</div>
+		 <div class="col-lg-7">
+			'.listUserVideo().'
 		</div>
 		</div>
 		';

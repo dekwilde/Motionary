@@ -62,6 +62,12 @@ if(isGET('do')){
                   <span class="input-group-addon">day(s) to digitalize this video.</span>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label for="budget">Budget </label>
+                  <input type="text" name="budget" class="form-control" id="budgetInput" placeholder="40">
+              </div>
+
               <div class="form-group">
                 <label for="tag">Motion Tag(s) </label>
                   <input name="tags" id="mySingleField" value="" disabled="true" style="display:none;">

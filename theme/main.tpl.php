@@ -39,7 +39,7 @@ include "connectSql.php";
 			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary</a>
 			  <ul class="nav navbar-nav">
 			    <li id="link-about"  class="disabled"><a href="/kinect/index.php">About</a></li>	  
-			    <li id="link-contribute"><a href="/kinect/application.php">Contrbute</a></li>
+			    <li id="link-contribute"><a href="/kinect/application.php">Contribute</a></li>
 			    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
 			    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
 			  </ul>
@@ -66,12 +66,15 @@ include "connectSql.php";
 	<div class="container  area_body">
 			<?php echo $out['content'];?>
 	</div>
-
-	<!-- <div id="pluginContainer">
-        <object id="zigPlugin" type="application/x-zig" width="0" height="0">
-            <param name="onload" value="zigPluginLoaded">
-        </object>
-    </div> -->
+	<?php
+		if(isGET('act')){
+			echo '<div id="pluginContainer">
+					<object id="zigPlugin" type="application/x-zig" width="0" height="0">
+            			<param name="onload" value="zigPluginLoaded">
+        			</object>
+    			  </div>';
+    	}
+    ?>
     <footer class="bs-footer">
     	2013 Motionary_version_git is powered by <a href="http://zigfu.com/" target="_blank">Zigfu</a>.
     </footer>

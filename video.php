@@ -50,6 +50,7 @@
 				<h5>Period:</h5>
 				Start from '.$start.'s to '.$end.'s. ('.($end-$start).' seconds)
 				<h5>Deadline: </h5>'.$deadDate->format('Y-m-d H:i:s').'<br/>
+				<h5>Budget: </h5>'.$budget.'(NTD)<br/>
 				<h5>Tag(s): </h5>'.generateTagLink($tag).'<br/><br/>'.$reqTimeTexts.'
 			</div>
 			</div>

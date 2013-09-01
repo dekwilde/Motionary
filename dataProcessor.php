@@ -10,8 +10,6 @@
 
 	if(isGET('upduser')&&isLogin()){
 		$arr = array(
-			'firstName' => filter_input(INPUT_POST,'firstName',FILTER_CALLBACK,array('options'=>'validate_text')), 
-			'lastName' => filter_input(INPUT_POST,'lastName',FILTER_CALLBACK,array('options'=>'validate_text')), 
 			'nickName' => filter_input(INPUT_POST,'nickName',FILTER_CALLBACK,array('options'=>'validate_text'))
 		);
 		updateUserBymail($_SESSION['mail'], $arr);
@@ -24,6 +22,10 @@
 
 		if(! ($arrs['tag'] = filter_input(INPUT_POST,'tag',FILTER_CALLBACK,array('options'=>'validate_text')))){
 			$errors['tag'] = 'Please tag at least one motion';
+		}
+
+		if(! ($arrs['budget'] = filter_input(INPUT_POST,'budget',FILTER_CALLBACK,array('options'=>'validate_text')))){
+			$errors['budget'] = 'Please specify the budget';
 		}
 
 		if(! ($arrs['start'] = filter_input(INPUT_POST,'start_value',FILTER_CALLBACK,array('options'=>'validate_text')))){
