@@ -64,7 +64,7 @@
 		 </div>
 		 <div class="col-lg-4">
 		 	<div class="well well-sm">
-		 		'.$result['nickName'].'，您現在有'.$result['coin'].'元。
+		 		'.$result['nickName'].', you have <strong>'.$result['coin'].'</strong> coin(s) in your pocket now.
 		 	</div> 
 		 </div>
 		</div>

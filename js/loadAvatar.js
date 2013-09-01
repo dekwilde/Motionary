@@ -12,7 +12,7 @@ window.onload = function(){
 
 function k_init() {
     var k_container = document.getElementById('area_motion');
-    var width = 500;
+    var width = 400;
     var height = 500;
 
     k_camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
@@ -55,12 +55,12 @@ function zigPluginLoaded() {
     console.log("zig plugin loaded");
     
     zig.addEventListener('userfound', function(user) {
-        console.log('Found user. ID: ' + user.id);
+        $('#instruction').html('We got you! Please click the record button. :-)');
         current_user = user;
         current_user.addEventListener('userupdate', function(user) {
             //This is called every time the kinect has new user skeleton data
             if(isRecord){
-                $('#instruction').html('Hello, User. We are collecting you motion data.');
+                $('#instruction').html('We are collecting you motion data.');
             }
             if(!isReplay)
                 moveDots(user);
@@ -71,7 +71,7 @@ function zigPluginLoaded() {
         console.log('We Lost user. ID: ' + user.id);
         // sendData();
         $('#record-btn').html('Record');
-        $('#instruction').html('We Lost you, please stand in front of the kinect sensor and click Record Btn.');
+        $('#instruction').html('Please stand in front of your kinect sensor and click Record Btn.');
 
     });
 }

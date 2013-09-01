@@ -29,14 +29,13 @@ a>.label{
 }
 
 #area_motion{
-	height: 600px;
-	width: 500px;
+	height: 350px;
+	width: 400px;
 	/*background-color: #f39c12;*/
 	/*border: 4px solid #FF0000;*/
 	text-align: center;
 	background-color: rgb(64, 64, 64);
 	border-radius: 3px;
-	margin: 10px auto;
 	color: white;
 }
 
@@ -52,6 +51,12 @@ a>.label{
 	margin: 0 auto;
 }
 
+#instruction{
+	margin-top: 10px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold; 
+}
 
 .jumbotron{
 	text-align: center;

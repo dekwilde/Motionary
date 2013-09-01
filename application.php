@@ -15,18 +15,25 @@ if(isGET('list')){
 }
 else if(isGET('act')){
 	$out['content'] = $libary.'
-	<div class="content">
-		<div id="area_motion">
+	<div class="row">
+		<div class="col-lg-4 col-lg-offset-2">
+			test
+		</div>
+		<div id="area_motion" class="col-lg-4">
 			<div class="btn-group">
 			  <button type="button" id="record-btn" class="btn btn-default">Record</button>
 			  <button type="button" id="replay-btn" class="btn btn-default">Replay</button>
 			  <button type="button" id="store-btn" class="btn btn-default">Store</button>
 			</div>
-			<div id="instruction">
-				Please stand in front of your kinect. :)
-			</div>
+			
 		</div>
-	</div>';
+	</div>
+	<div class="row">
+		<div id="instruction" class="col-lg-8 col-lg-offset-2 alert alert-danger">
+				Please stand in front of your kinect. :)
+		</div>
+	</div>
+	';
 }
 else{
 	redirect('application.php/list');

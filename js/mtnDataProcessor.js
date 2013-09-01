@@ -5,11 +5,11 @@ var mtnArr = new Array();
 
 $(function allowRecordData(){
 	$('#record-btn').click(function(e){
-		console.log('Start Record...');
+		console.log('Start Recording...');
 		var count = 5, countdown;
 		countdown = setInterval(function(){
 			var seconds = count;
-			$("#record-btn").html(seconds + " seconds to start");
+			$("#instruction").html("Attention! "+ seconds + " seconds to start recording");
 			if (count == 0) {
 				console.log('count = 0');
 				$('#record-btn').html('Recording...');
