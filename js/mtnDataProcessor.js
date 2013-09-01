@@ -47,9 +47,10 @@ function sendData(){
      }	
      
      if(mtnStr!=''){
+     	 $('#record-btn').html('Record');
      	 $('#store-btn').html('storing...');
-	     $.post("/kinect/mtnDataRetriver.php", {mtnData: mtnStr}, function(reMsg){
-	     	// console.log(reMsg);
+	     $.post("/kinect/mtnDataRetriver.php", {mtnData: mtnStr, vid: $('#vid').html()}, function(reMsg){
+	     	console.log(reMsg);
 	     	// mtnArr = new Array();
 	     	$('#store-btn').html('store');
 
@@ -60,6 +61,7 @@ function sendData(){
 }
 
 function replayMtn(){
+	$('#record-btn').html('Record');
 	k_camera.position.z = 800;
 	if(index>=(mtnArr.length/24)){
 		isReplay = 0;
@@ -68,11 +70,11 @@ function replayMtn(){
 	for(var i = 0; i < skeletonPoints.length; i++) {
 					var tempArr = mtnArr[index*24+i].split(', ');
 	                var object = skeletonPoints[i];
-	                console.log((index*24+i)+': '+tempArr[2]+', '+tempArr[3]+', '+tempArr[4]);
+	                // console.log((index*24+i)+': '+tempArr[2]+', '+tempArr[3]+', '+tempArr[4]);
 	                object.position.x = tempArr[2] / 5;
 	                object.position.y = tempArr[3] / 5;
 	                object.position.z = - (tempArr[4] / 5);
-	                console.log(i+"=>"+object.position.x+", "+object.position.y+", "+object.position.z);
+	                // console.log(i+"=>"+object.position.x+", "+object.position.y+", "+object.position.z);
 	}
 	index++;
 	// console.log(index);

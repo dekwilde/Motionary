@@ -14,10 +14,12 @@ if(isGET('list')){
 	$out['content'] = listAllVideo();
 }
 else if(isGET('act')){
+	$vid = $_GET['act'];
+
 	$out['content'] = $libary.'
 	<div class="row">
 		<div class="col-lg-4 col-lg-offset-2">
-			test
+			<img src="http://thecogentcoach.com/wordpress/wp-content/uploads/2012/11/video-play-2.gif" style="width:350px;">
 		</div>
 		<div id="area_motion" class="col-lg-4">
 			<div class="btn-group">
@@ -29,11 +31,11 @@ else if(isGET('act')){
 		</div>
 	</div>
 	<div class="row">
-		<div id="instruction" class="col-lg-8 col-lg-offset-2 alert alert-danger">
+		<div id="instruction" class="col-lg-8 col-lg-offset-2 alert alert-info">
 				Please stand in front of your kinect. :)
 		</div>
 	</div>
-	';
+	<div id="vid" style="display:none">'.$vid.'</div>';
 }
 else{
 	redirect('application.php/list');
