@@ -42,13 +42,13 @@
 					<div class="form-group">
 					<label for="lastName" class="col-lg-2 control-label">LastName</label>
 					<div class="col-lg-10">
-					<input type="text" name="lastName" id="disabledInput" class="form-control" value="'.$result['lastName'].'" disabled>
+					<input type="text" name="lastName"  class="form-control" placeholder="'.$result['lastName'].'" disabled>
 					</div>
 					</div>
 					<div class="form-group">
 					<label for="firstName" class="col-lg-2 control-label">FirstName</label>
 					<div class="col-lg-10">
-					<input type="text" name="firstName" id="disabledInput" class="form-control" value="'.$result['firstName'].'" disabled>
+					<input type="text" name="firstName"  class="form-control" placeholder="'.$result['firstName'].'" disabled>
 					</div>
 					</div>
 					<div class="form-group">
@@ -61,6 +61,11 @@
 
 					</form>
 			</div>
+		 </div>
+		 <div class="col-lg-4">
+		 	<div class="well well-sm">
+		 		'.$result['nickName'].'，您現在有'.$result['coin'].'元。
+		 	</div> 
 		 </div>
 		</div>
 		';

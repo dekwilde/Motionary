@@ -44,7 +44,7 @@
 
 
 	function listAllVideo(){
-		$result = mysql_query("SELECT * FROM videoData");
+		$result = mysql_query("SELECT * FROM videoData ORDER BY vid DESC");
 		$htmlFrag = '';
 		
 
