@@ -32,8 +32,8 @@
 		//create the timeago 
 		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.intoISOTimestamp($requestTime).'"></abbr>';
 
-		$content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
-		parse_str($content, $ytarr);
+		// $content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
+		// parse_str($content, $ytarr);
 		// debug($ytarr['title']);
 
 		//output html content.
@@ -64,7 +64,7 @@
 		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
 			$out['content'] .= '<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>';
 		}else{
-			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You has already contributed or time is up.</button>';
+			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You have already contributed or time is up.</button>';
 		}
 
 		//list the motion
@@ -75,7 +75,7 @@
 		</div>
 		</div>';
 	}else{
-		
+		$out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
 
 	}
 	require 'footer.php';
