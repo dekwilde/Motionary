@@ -33,7 +33,7 @@
   fclose($fp);
 
   //return the successfull msg to the client.
-  echo '{"status:" 1, "alphaid":"'.$_POST['vid'].'"}';
+  echo '{"status": 1, "alphaid":"'.$_POST['vid'].'"}';
 
 
 

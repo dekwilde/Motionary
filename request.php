@@ -13,7 +13,7 @@ $library = '
 
 if(isGET('do')){
   if(!isLogin()){
-    $out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
+      $out['content'] = 'You need to login in.';
   }else{
         	$out['content'] = $library.'
         		<div class="row">

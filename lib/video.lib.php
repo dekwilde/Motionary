@@ -56,6 +56,7 @@
 				$htmlFrag .= '
 					  <li class="list-group-item">
 					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
+					    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg" id="'.$row['mid'].'" onclick="getReplayPage('.$row['mid'].');">Replay this Motion!</a>
 					  </li>';
 			}	
 		}
@@ -82,7 +83,6 @@
 			</div></a>
 			</div>';
 
-			// $htmlFrag .= '<a href="/kinect/video.php/dtls/'.$row['identity'].'"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" style="width:200px; margin:5px;"><br/>'.$row['ytoutubeID'].'</a>';  
 		}
 		return $htmlFrag;
 	}

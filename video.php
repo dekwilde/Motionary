@@ -6,7 +6,8 @@
 	require_once('lib/PhpConsole.php');
 	
 	PhpConsole::start();
-	$library = '<script type="text/javascript" src="/kinect/js/video.js"></script>';
+	$library = '<script type="text/javascript" src="/kinect/js/video.js"></script>
+		<script type="text/javascript" src="/kinect/js/Three.js"></script>';
 
 	if(isGET('dtls')&&isLogin()){
 		$alphaid = $_GET['dtls'];
@@ -73,7 +74,28 @@
 				'.$listAllMotion['htmlFrag'].'
 			</div>
 		</div>
-		</div>';
+		</div>
+		<!-- Modal -->
+		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" style="width:900px;">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title">Replay</h4>
+		        </div>
+		        <div class="modal-body row">
+		        <div class="col-lg-5 col-lg-offset-1">
+					video..
+		        </div>
+		        <div class="col-lg-4" id="area_motion">
+					replay..
+		        </div>
+		        </div>
+		        <div class="modal-footer">
+		        </div>
+		      </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		  </div><!-- /.modal -->
+		';
 	}else{
 		$out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
 
