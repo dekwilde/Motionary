@@ -10,12 +10,13 @@ window.onload = function() {
 
 	swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=ytplayer&version=3",
 		"video_sec", "300", "250", "8", null, null, params, atts);
+	k_init();
+	k_animate();
+
 }
 
 
 function getReplayPage(id){
-	 k_init();
-     k_animate();
 }
 
 function k_init() {

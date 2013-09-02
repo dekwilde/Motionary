@@ -80,14 +80,14 @@
 		    <div class="modal-dialog" style="width:900px;">
 		      <div class="modal-content">
 		        <div class="modal-header">
-		          <h4 class="modal-title">Replay</h4>
+		          <h4 class="modal-title">Replay Page</h4>
 		        </div>
 		        <div class="modal-body row">
 		        <div class="col-lg-5 col-lg-offset-1">
-					video..
+					video div
 		        </div>
 		        <div class="col-lg-4" id="area_motion">
-					replay..
+					replay div
 		        </div>
 		        </div>
 		        <div class="modal-footer">
