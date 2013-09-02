@@ -1,17 +1,44 @@
 <?php
+  $out['self'] = 'mtnDataRetriver';
   include "connectSql.php";
-  
-  // echo $_POST['mtnData'];
+  require "header.php";
+
+  if(!isLogin()){
+    return;
+  }
+
+  //get contributor's ip address and tranform into tag in float format.
   $ip	= (string)$_SERVER['REMOTE_ADDR'];
   $tag = sprintf('%u',ip2long($_SERVER['REMOTE_ADDR']));
-  $mtnData = $_POST['mtnData'];
   
-  $directory = './skeletonData/';
-  $filename = $_POST['vid'].'.txt';
 
+  $mtnData = $_POST['mtnData'];//Skeleton data retrieved from kinect.
+  $mail = $_SESSION['mail'];//contributor's e-mail address.
+
+  //specify the .txt file name and the directory name where we want to save.
+  $directory = './skeletonData/';
+  $accountName = explode("@", $mail);
+  $filename = $_POST['vid'].'_'.$accountName[0].'.txt';
+
+  //save the information about this contribution. 
+  if(!mysql_query("INSERT INTO motiondata (vid, fileName, owner , onickName, score) VALUES 
+  ('".$_POST['vid']."', '".$filename."','".$_SESSION['mail']."','".$_SESSION['nickName']."',0)")){
+    //failed to save to database.
+    echo '{"status:" 0}';
+  }
+
+  //write to the file.
   $fp = fopen($directory.$filename, "a+");
   $write = fputs($fp, $mtnData);
   fclose($fp);
+
+  //return the successfull msg to the client.
+  echo '{"status:" 1, "alphaid":"'.$_POST['vid'].'"}';
+
+
+
+
+
 
   //read from data
   // to open file

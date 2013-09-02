@@ -87,7 +87,7 @@ function moveDots(user){
                     object.position.x = 5000;
                     object.position.y = 5000;
                     if(isRecord)
-                        addData(i ,t, [5000,5000,5000]);
+                        pushSkeletonData(i ,t, [5000,5000,5000]);
                     continue;
                 }
                 var kinectFeedPosition = kinectFeedPart.position;
@@ -98,7 +98,7 @@ function moveDots(user){
                 var t = new Date().getTime() - start;
                 if(isRecord){
                     // console.log(i+"=>"+object.position.x+", "+object.position.y+", "+object.position.z);
-                    addData(i ,t, kinectFeedPart.position);
+                    pushSkeletonData(i ,t, kinectFeedPart.position);
                 }
     }
 }

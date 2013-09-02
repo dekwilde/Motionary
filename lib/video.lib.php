@@ -42,6 +42,28 @@
 		return mysql_query("SELECT * FROM videoData WHERE identity='".$alphaID."'");
 	}
 
+	function listAllmotion($vid){
+		$result = mysql_query("SELECT * FROM motiondata WHERE vid ='".$vid."' ORDER BY mid DESC");
+		$htmlFrag = '<ul class="list-group">
+					  <li class="list-group-item" style="background: #eee;"><span class="glyphicon glyphicon-align-justify"></span> There are '.mysql_num_rows($result).' motion(s)...<br/></li>';
+		$hasContribute = false;
+
+		if($result){
+			while ($row = mysql_fetch_array($result)) {
+				if($row['owner']==$_SESSION['mail']){
+					$hasContribute = true;
+				}
+				$htmlFrag .= '
+					  <li class="list-group-item">
+					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
+					  </li>';
+			}	
+		}
+		$htmlFrag .= '</ul>';
+		$rMsg = array('htmlFrag' => $htmlFrag, 'hasContribute' => $hasContribute );
+		return $rMsg;
+	}
+
 
 	function listAllVideo(){
 		$result = mysql_query("SELECT * FROM videoData ORDER BY vid DESC");

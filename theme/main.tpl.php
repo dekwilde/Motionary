@@ -50,8 +50,9 @@ include "connectSql.php";
 			  <?php
 			  	if(isLogin()){
 			  		$result = mysql_fetch_array(searchUserBymail($_SESSION['mail']));
-
-			  		echo '<a href="/kinect/logout.php" class="btn btn-default navbar-btn pull-right" id="sign-btn">Log out</a><a href="/kinect/user.php" id="link-user-name" class="btn btn-primary navbar-btn pull-right"><span class="glyphicon glyphicon-user"></span> '.$result['nickName'].'<span class="badge">0</span></a>
+			  		if(!isset($_SESSION['nickName']))
+			  			$_SESSION['nickName'] = $result['nickName'];
+			  		echo '<a href="/kinect/logout.php" class="btn btn-default navbar-btn pull-right" id="sign-btn">Log out</a><a href="/kinect/user.php" id="link-user-name" class="btn btn-primary navbar-btn pull-right"><span class="glyphicon glyphicon-user"></span> '.$_SESSION['nickName'].'<span class="badge">0</span></a>
 			  		';
 			  	}else{
 			  		echo '<a href="/kinect/login.php" class="btn btn-default navbar-btn pull-right">Sign in with Google</a>';

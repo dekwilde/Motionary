@@ -137,6 +137,13 @@ function validate_text($str){
 		return $str;
 }
 
+function intoISOTimestamp($time){
+	$unixTime = strtotime($time.' GMT');
+	$reqDate = new DateTime("@$unixTime");
+	$reqDate = explode("+", $reqDate->format('c'));
+
+	return $reqDate[0];
+}
 
 function alphaID($in, $to_num = false, $pad_up = false, $passKey = null){
 	$index = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -25,17 +25,17 @@
 		$unixTime = $deadline;
 		$deadDate = new DateTime("@$unixTime");
 
-		$unixTime = strtotime($requestTime.' GMT');
-		$reqDate = new DateTime("@$unixTime");
-		$reqDate = explode("+", $reqDate->format('c'));
-		// debug($unixTime);
-		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.$reqDate[0].'"></abbr>';
+		//create the timeago 
+		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.intoISOTimestamp($requestTime).'"></abbr>';
 
 		$content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
 		parse_str($content, $ytarr);
 		// debug($ytarr['title']);
 
 		//output html content.
+
+		//listAllMotion is defined in the video.lib.php
+		$listAllMotion = listAllMotion($alphaid);
 
 		$out['content'] = $library.'<div class="panel panel-default col-lg-8 col-lg-offset-2"><div class="row">
 		<div class="panel-body col-lg-5"><div id="video_sec"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;"></div></div>
@@ -56,11 +56,17 @@
 			</div>
 				
 			</div>
-		</div>
-		<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>
-		<div class="row">
+		</div>';
+		if(!$listAllMotion['hasContribute']){
+			$out['content'] .= '<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>';
+		}else{
+			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You has already contributed.</button>';
+		}
+
+		//list the motion
+		$out['content'] .= '<div class="row">
 			<div class="panel-body">
-				<span class="glyphicon glyphicon-align-justify"></span>There are $var motions...<br/> listMotion($id);
+				'.$listAllMotion['htmlFrag'].'
 			</div>
 		</div>
 		</div>';
