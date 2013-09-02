@@ -24,7 +24,11 @@
 
 		$unixTime = $deadline;
 		$deadDate = new DateTime("@$unixTime");
-
+		if(time()<$unixTime){
+			$deadDate = $deadDate->format('Y-m-d H:i:s');
+		}else{
+			$deadDate = '<b style="color:red;">Time is up!</b>';
+		}
 		//create the timeago 
 		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.intoISOTimestamp($requestTime).'"></abbr>';
 
@@ -49,7 +53,7 @@
 				.$ytoutubeID.'</a><br/>
 				<h5>Period:</h5>
 				Start from '.$start.'s to '.$end.'s. ('.($end-$start).' seconds)
-				<h5>Deadline: </h5>'.$deadDate->format('Y-m-d H:i:s').'<br/>
+				<h5>Deadline: </h5>'.$deadDate.'<br/>
 				<h5>Budget: </h5>'.$budget.'(NTD)<br/>
 				<h5>Tag(s): </h5>'.generateTagLink($tag).'<br/><br/>'.$reqTimeTexts.'
 			</div>
@@ -57,10 +61,10 @@
 				
 			</div>
 		</div>';
-		if(!$listAllMotion['hasContribute']){
+		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
 			$out['content'] .= '<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>';
 		}else{
-			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You has already contributed.</button>';
+			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You has already contributed or time is up.</button>';
 		}
 
 		//list the motion
