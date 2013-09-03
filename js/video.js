@@ -112,9 +112,9 @@ function replayMtn(){
 					}else{
                         for(var i = 0; i < skeletonPoints.length; i++) {
                             var object = skeletonPoints[i];
-                            object.position.x = tempArr[2] / 5;
-                            object.position.y = tempArr[3] / 5;
-                            object.position.z = - (tempArr[4] / 5);
+                            object.position.x = 0;
+                            object.position.y = 0;
+                            object.position.z = 0;
                             
                         }    
                         isReplay = 0;
