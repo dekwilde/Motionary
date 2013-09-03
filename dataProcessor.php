@@ -14,6 +14,12 @@
 		);
 		updateUserBymail($_SESSION['mail'], $arr);
 		echo '{"status":1}';
+	}else if(isGET('updrqst')&&isLogin()){
+		// $arr = array(
+		// 	'nickName' => filter_input(INPUT_POST,'nickName',FILTER_CALLBACK,array('options'=>'validate_text'))
+		// );
+		// updateUserBymail($_SESSION['mail'], $arr);
+		echo '{"status":1}';
 	}else if(isGET('reqvid')&&isLogin()){
 
 		if(! ($arrs['ytoutubeID'] = filter_input(INPUT_POST,'vid',FILTER_CALLBACK,array('options'=>'validate_text')))){

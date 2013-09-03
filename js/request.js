@@ -87,6 +87,27 @@ window.onload = function() {
 
 	});
 
+	$('#form-request-update').submit(function(e){
+		e.preventDefault();
+		if(working)
+			return;
+		working = true;
+		var data = $(this).serialize();
+		console.log(data);
+		$('#btn-upd-request').html('Updating...');
+		NProgress.start();		
+		$.post('/kinect/dataProcessor.php/updrqst',data,function(msg){
+			NProgress.done();
+			working = false;
+			$('#btn-upd-request').html('Update your request');
+			if(msg.status==1){
+				console.log("status "+msg.status);
+    	        location.reload();
+			}
+		},'json');
+
+	});
+
 };
 
 

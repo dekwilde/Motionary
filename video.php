@@ -63,7 +63,10 @@
 			</div>
 		</div>';
 		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
-			$out['content'] .= '<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>';
+			$out['content'] .= '
+				<a class="btn btn-default btn-lg btn-block" href="/kinect/video.php/edit/'.$alphaid.'">Edit Request</a>
+				<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>
+			';
 		}else{
 			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You have already contributed or time is up.</button>';
 		}
@@ -74,6 +77,128 @@
 				'.$listAllMotion['htmlFrag'].'
 			</div>
 		</div>
+		</div>
+		<!-- Modal -->
+		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" style="width:900px;">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title">Replay Page</h4>
+		        </div>
+		        <div class="modal-body row">
+		        <div class="col-lg-5 col-lg-offset-1">
+					video div
+		        </div>
+		        <div class="col-lg-4" id="area_motion">
+					replay div
+		        </div>
+		        <div class="row col-lg-8 col-lg-offset-2" style="margin-top:15px;">
+		        	<button class="btn btn-primary btn-lg btn-block disabled" id="replay-btn">Loading motion now...</button>
+		        </div>
+		        </div>
+				
+		        <div class="modal-footer">
+		        </div>
+		      </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+		  </div><!-- /.modal -->
+		';
+	}else if(isGET('edit')&&isLogin()){
+		$alphaid = $_GET['edit'];
+		
+		//Get video details
+		$result = mysql_fetch_array(searchVideoByID($alphaid));
+		foreach ($result as $key => $value) {
+			$$key = $value;
+		}
+
+		$userResult = mysql_fetch_array(searchUserBymail($owner));
+
+
+		//operate the video data.
+
+		$unixTime = $deadline;
+		$deadDate = new DateTime("@$unixTime");
+		if(time()<$unixTime){
+			$deadDate = $deadDate->format('Y-m-d H:i:s');
+		}else{
+			$deadDate = '<b style="color:red;">Time is up!</b>';
+		}
+		//create the timeago 
+		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.intoISOTimestamp($requestTime).'"></abbr>';
+
+		// $content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
+		// parse_str($content, $ytarr);
+		// debug($ytarr['title']);
+
+		//output html content.
+
+		//listAllMotion is defined in the video.lib.php
+		$listAllMotion = listAllMotion($alphaid);
+
+		$out['content'] = $library.'<div class="panel panel-default col-lg-8 col-lg-offset-2"><div class="row">
+		<div class="panel-body col-lg-5"><div id="video_sec"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;"></div></div>
+			<div class="panel-body col-lg-7">
+			<div class="panel panel-info">
+			<div class="panel-heading">
+			<h3 class="panel-title">Request Informations</h3>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" id="form-request-update" role="form">
+					<div class="form-group">
+					<label class="col-lg-2 control-label">Video\'s ID:</label><br/>
+					<div class="col-lg-10">
+					<input type="text" class="form-control" id="disabledInput" placeholder="'.$ytoutubeID.'" disabled>
+					<a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank style="display:none;">'.$ytoutubeID.'</a>
+					</div>
+					</div>
+					<div class="form-group">
+					<label for="period" class="col-lg-2 control-label">Period:</label>
+					<div class="col-lg-10">
+					<input type="text" class="form-control" placeholder="Start from '.$start.'s to '.$end.'s. ('.($end-$start).' seconds)" disabled>
+					</div>
+					</div>
+					<div class="form-group">
+					<label for="deadline" class="col-lg-2 control-label">Deadline:</label>
+					<div class="col-lg-10">
+					<input type="text" name="deadline"  class="form-control" placeholder="'.$deadDate.'">
+					</div>
+					</div>
+					<div class="form-group">
+					<label for="budget" class="col-lg-2 control-label">Budget:</label>
+					<div class="col-lg-10">
+					<input type="text" name="budget" class="form-control" value="'.$budget.'">
+					</div>
+					</div>
+					<div class="form-group">
+					<label for="tag" class="col-lg-2 control-label">Tag(s):</label>
+					<div class="col-lg-10">
+					'.generateTagLink($tag).'
+					</div>
+					</div>
+					<button id="btn-upd-request" type="submit" class="btn btn-primary">Finish Editting</button>
+				</form>
+				
+				<!--<h5>Youtube\'s ID: </h5><a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank>'
+				.$ytoutubeID.'</a><br/>
+				<h5>Period:</h5>
+				Start from '.$start.'s to '.$end.'s. ('.($end-$start).' seconds)
+				<h5>Deadline: </h5>'.$deadDate.'<br/>
+				<h5>Budget: </h5>'.$budget.'(NTD)<br/>
+				<h5>Tag(s): </h5>'.generateTagLink($tag).'<br/><br/>'.$reqTimeTexts.'-->
+			</div>
+			</div>
+				
+			</div>
+		</div>';
+		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
+			$out['content'] .= '';
+		}else{
+			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You have already contributed or time is up.</button>';
+		}
+
+		//list the motion
+		$out['content'] .= '
 		</div>
 		<!-- Modal -->
 		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
