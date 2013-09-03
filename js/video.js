@@ -2,6 +2,8 @@ var k_camera, k_scene, k_renderer;
 var skeletonPoints = [];
 var start;
 var index = 0;
+var mtnArr;
+var isReplay = 0;
 
 window.onload = function() {
 	var params = { allowScriptAccess: "always" };
@@ -17,6 +19,24 @@ window.onload = function() {
 
 
 function getReplayPage(id){
+    var working = true;
+    $('#replay-btn').html('Loading motion data...');
+    $('#replay-btn').addClass('disabled');
+    $.post("/kinect/mtnDataRetriver.php/retrieve", {mid: id}, function(reMsg){
+            working = false;
+            // console.log(reMsg);
+            // mtnArr = new Array();
+            $('#replay-btn').html('Replay this motion now!');
+            $('#replay-btn').removeClass('disabled');
+            mtnArr = reMsg.mtnArr.split(':'); 
+    },'json');
+    $('#replay-btn').click(function(){
+        if(!working){    
+            index = 0;
+            isReplay = 1;
+        }
+
+    });
 }
 
 function k_init() {
@@ -56,39 +76,12 @@ function k_init() {
 
 
 }
-
-function moveDots(user){
-    for(var i = 0; i < skeletonPoints.length; i++) {
-            //Loop through each of the dots
-            var kinectFeedPart = user.skeleton[i+1];
-                // console.log(zig.Joint);
-                //Get data information for each joint.
-                if( typeof kinectFeedPart == 'undefined') { //If joint data isnt avaiable place dot offscreen and continue on.
-                    var object = skeletonPoints[i];
-                    object.position.x = 5000;
-                    object.position.y = 5000;
-                    if(isRecord)
-                        pushSkeletonData(i ,t, [5000,5000,5000]);
-                    continue;
-                }
-                var kinectFeedPosition = kinectFeedPart.position;
-                var object = skeletonPoints[i];
-                object.position.x = kinectFeedPosition[0] / 5;
-                object.position.y = kinectFeedPosition[1] / 5;
-                object.position.z = -kinectFeedPosition[2] / 5;
-                var t = new Date().getTime() - start;
-                if(isRecord){
-                    // console.log(i+"=>"+object.position.x+", "+object.position.y+", "+object.position.z);
-                    pushSkeletonData(i ,t, kinectFeedPart.position);
-                }
-    }
-}
-
 ///Animating and rendering for three.js scene
 
 function k_animate() {
     requestAnimationFrame(k_animate);
-    replayMtn('');
+    if(isReplay)    
+        replayMtn();
     k_render();
     // console.log(new Date().getTime());
 }
@@ -105,25 +98,26 @@ function k_render() {
 
 
 
-function replayMtn(mtnArr){
-	$('#record-btn').html('Record');
+function replayMtn(){
 	k_camera.position.z = 800;
 	k_camera.position.y = -350;
 
-	if(index>=(mtnArr.length/24)){
-		isReplay = 0;
-		k_camera.position.z = 250;
-		k_camera.position.y += (200 - k_camera.position.y ) * .05;
-
-	}
 	for(var i = 0; i < skeletonPoints.length; i++) {
 					var tempArr;
 					// console.log(mtnArr[index*24+i]);
-					var object = skeletonPoints[i];
+                    var object = skeletonPoints[i];
 
 					if(typeof mtnArr[index*24+i]!='undefined'){
 						tempArr = mtnArr[index*24+i].split(', ');
 					}else{
+                        for(var i = 0; i < skeletonPoints.length; i++) {
+                            var object = skeletonPoints[i];
+                            object.position.x = tempArr[2] / 5;
+                            object.position.y = tempArr[3] / 5;
+                            object.position.z = - (tempArr[4] / 5);
+                            
+                        }    
+                        isReplay = 0;
 						continue;
 					}
 

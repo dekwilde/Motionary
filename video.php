@@ -89,7 +89,11 @@
 		        <div class="col-lg-4" id="area_motion">
 					replay div
 		        </div>
+		        <div class="row col-lg-8 col-lg-offset-2" style="margin-top:15px;">
+		        	<button class="btn btn-primary btn-lg btn-block disabled" id="replay-btn">Loading motion now...</button>
 		        </div>
+		        </div>
+				
 		        <div class="modal-footer">
 		        </div>
 		      </div><!-- /.modal-content -->

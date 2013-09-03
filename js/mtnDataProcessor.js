@@ -50,7 +50,7 @@ function storeSkeletonData(){
      	 $('#record-btn').html('Record');
      	 $('#store-btn').html('Storing...');
 
-	     $.post("/kinect/mtnDataRetriver.php", {mtnData: mtnStr, vid: $('#vid').html()}, function(reMsg){
+	     $.post("/kinect/mtnDataRetriver.php/store", {mtnData: mtnStr, vid: $('#vid').html()}, function(reMsg){
 	     	console.log(reMsg);
 	     	// mtnArr = new Array();
 	     	$('#store-btn').html('store');
