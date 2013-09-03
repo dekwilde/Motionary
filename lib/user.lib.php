@@ -37,6 +37,12 @@
 		return mysql_query("UPDATE userData SET nickName = '".$arr['nickName']."' WHERE email='".$mail."'");
 	}
 
+	function updateRequest($arr){
+		// alert($arr);
+		// return mysql_query("UPDATE userData SET nickName = '".$arr['nickName']."' WHERE email='".$mail."'");
+		return true;
+	}
+
 	function isLogin()
 	{
 		if(isset($_SESSION['login'])){

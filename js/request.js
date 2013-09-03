@@ -1,8 +1,5 @@
 var playerObj;
 
-$(function(){
-			
-});
 
 window.onload = function() {
 	
@@ -67,6 +64,7 @@ window.onload = function() {
 	//When user update their information 
 
     $('#form-user-update').submit(function(e){
+    	alert();
 		e.preventDefault();
 		if(working)
 			return;
@@ -86,6 +84,7 @@ window.onload = function() {
 		},'json');
 
 	});
+
 
 	$('#form-request-update').submit(function(e){
 		e.preventDefault();

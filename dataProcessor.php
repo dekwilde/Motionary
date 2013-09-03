@@ -10,15 +10,16 @@
 
 	if(isGET('upduser')&&isLogin()){
 		$arr = array(
-			'nickName' => filter_input(INPUT_POST,'nickName',FILTER_CALLBACK,array('options'=>'validate_text'))
+			'nickName' => filter_input(INPUT_POST,'nickName',FILTER_CALLBACK,array('options'=>'validate_text')),
+			'budget' => filter_input(INPUT_POST,'budget',FILTER_CALLBACK,array('options'=>'validate_text'))
 		);
 		updateUserBymail($_SESSION['mail'], $arr);
 		echo '{"status":1}';
 	}else if(isGET('updrqst')&&isLogin()){
-		// $arr = array(
-		// 	'nickName' => filter_input(INPUT_POST,'nickName',FILTER_CALLBACK,array('options'=>'validate_text'))
-		// );
-		// updateUserBymail($_SESSION['mail'], $arr);
+		$arr = array(
+			'deadline' => filter_input(INPUT_POST,'deadline',FILTER_CALLBACK,array('options'=>'validate_text'))
+		);
+		updateRequest($arr);
 		echo '{"status":1}';
 	}else if(isGET('reqvid')&&isLogin()){
 

@@ -146,7 +146,7 @@ function intoISOTimestamp($time){
 }
 
 function alphaID($in, $to_num = false, $pad_up = false, $passKey = null){
-	$index = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$index = "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	if ($passKey !== null) {
 		// Although this function's purpose is to just make the
 		// ID short - and not so much secure,

@@ -6,12 +6,14 @@
 	require_once('lib/PhpConsole.php');
 	
 	PhpConsole::start();
-	$library = '<script type="text/javascript" src="/kinect/js/video.js"></script>
-		<script type="text/javascript" src="/kinect/js/Three.js"></script>';
 
 	if(isGET('dtls')&&isLogin()){
+		
 		$alphaid = $_GET['dtls'];
 		
+		$library = '<script type="text/javascript" src="/kinect/js/video.js"></script>
+		<script type="text/javascript" src="/kinect/js/Three.js"></script>';
+
 		//Get video details
 		$result = mysql_fetch_array(searchVideoByID($alphaid));
 		foreach ($result as $key => $value) {
@@ -104,6 +106,12 @@
 		  </div><!-- /.modal -->
 		';
 	}else if(isGET('edit')&&isLogin()){
+		
+		$library = '<script type="text/javascript" src="/kinect/js/request.js"></script>
+		<script src="/kinect/js/lib/tag-it.min.js" type="text/javascript" charset="utf-8"></script>
+  		<link href="/kinect/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+  		<link href="/kinect/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">';
+
 		$alphaid = $_GET['edit'];
 		
 		//Get video details
@@ -127,17 +135,10 @@
 		//create the timeago 
 		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.intoISOTimestamp($requestTime).'"></abbr>';
 
-		// $content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
-		// parse_str($content, $ytarr);
-		// debug($ytarr['title']);
-
 		//output html content.
 
-		//listAllMotion is defined in the video.lib.php
-		$listAllMotion = listAllMotion($alphaid);
-
 		$out['content'] = $library.'<div class="panel panel-default col-lg-8 col-lg-offset-2"><div class="row">
-		<div class="panel-body col-lg-5"><div id="video_sec"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;"></div></div>
+		<div class="panel-body col-lg-5"><div><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;"></div></div>
 			<div class="panel-body col-lg-7">
 			<div class="panel panel-info">
 			<div class="panel-heading">
@@ -146,7 +147,7 @@
 			<div class="panel-body">
 				<form class="form-horizontal" id="form-request-update" role="form">
 					<div class="form-group">
-					<label class="col-lg-2 control-label">Video\'s ID:</label><br/>
+					<label class="col-lg-2 control-label">VID:</label>
 					<div class="col-lg-10">
 					<input type="text" class="form-control" id="disabledInput" placeholder="'.$ytoutubeID.'" disabled>
 					<a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank style="display:none;">'.$ytoutubeID.'</a>
@@ -161,7 +162,7 @@
 					<div class="form-group">
 					<label for="deadline" class="col-lg-2 control-label">Deadline:</label>
 					<div class="col-lg-10">
-					<input type="text" name="deadline"  class="form-control" placeholder="'.$deadDate.'">
+					<input type="text" name="deadline"  class="form-control" value="'.$deadDate.'">
 					</div>
 					</div>
 					<div class="form-group">
@@ -190,41 +191,10 @@
 			</div>
 				
 			</div>
-		</div>';
-		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
-			$out['content'] .= '';
-		}else{
-			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You have already contributed or time is up.</button>';
-		}
+		</div></div>';
+		
 
-		//list the motion
-		$out['content'] .= '
-		</div>
-		<!-- Modal -->
-		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    <div class="modal-dialog" style="width:900px;">
-		      <div class="modal-content">
-		        <div class="modal-header">
-		          <h4 class="modal-title">Replay Page</h4>
-		        </div>
-		        <div class="modal-body row">
-		        <div class="col-lg-5 col-lg-offset-1">
-					video div
-		        </div>
-		        <div class="col-lg-4" id="area_motion">
-					replay div
-		        </div>
-		        <div class="row col-lg-8 col-lg-offset-2" style="margin-top:15px;">
-		        	<button class="btn btn-primary btn-lg btn-block disabled" id="replay-btn">Loading motion now...</button>
-		        </div>
-		        </div>
-				
-		        <div class="modal-footer">
-		        </div>
-		      </div><!-- /.modal-content -->
-		    </div><!-- /.modal-dialog -->
-		  </div><!-- /.modal -->
-		';
+		
 	}else{
 		$out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
 
