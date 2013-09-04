@@ -4,6 +4,7 @@ var start;
 var index = 0;
 var mtnArr;
 var isReplay = 0;
+var startTime = 0;
 
 window.onload = function() {
 	var params = { allowScriptAccess: "always" };
@@ -118,9 +119,14 @@ function replayMtn(){
                             
                         }    
                         isReplay = 0;
+                        $('#replay-btn').html('Replay this motion now!');
 						continue;
 					}
-
+                    if(index==1){
+                        // alert('fuck');
+                        startTime = tempArr[1];
+                    }
+                    $('#replay-btn').html(((tempArr[1]-startTime)/1000).toFixed(3)+' s');
 	                // console.log((index*24+i)+': '+tempArr[2]+', '+tempArr[3]+', '+tempArr[4]);
 	                object.position.x = tempArr[2] / 5;
 	                object.position.y = tempArr[3] / 5;
@@ -128,5 +134,5 @@ function replayMtn(){
 	                // console.log(i+"=>"+object.position.x+", "+object.position.y+", "+object.position.z);
 	}
 	index++;
-	// console.log(index);
+	console.log(index);
 }
