@@ -5,6 +5,7 @@ var index = 0;
 var mtnArr;
 var isReplay = 0;
 var startTime = 0;
+var rplayerObj;
 var playerObj;
 
 window.onload = function() {
@@ -12,8 +13,13 @@ window.onload = function() {
 	var atts = { id: "myPlayer" };
 	var videoId = $("#ytoutubeID").html();
 
-	swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=replayplayer&version=3",
-		"video_sec", "300", "250", "8", null, null, params, atts);
+	swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=ytplayer&version=3",
+		"video_sec", "289", "250", "8", null, null, params, atts);
+
+    $('#play-video-btn').click(function(){
+        playerObj.seekTo($('#start-time').html(), true);
+    });
+
 	k_init();
 	k_animate();
 
@@ -27,8 +33,11 @@ function getReplayPage(id){
     var atts = { id: "myRePlayer" };
     var videoId = $("#ytoutubeID").html();
 
+    //stop playing the video in video.php
+    playerObj.stopVideo();
+
     //load the video
-    swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=ytplayer&version=3",
+    swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=replayplayer&version=3",
         "video_replay_sec", "300", "300", "8", null, null, params, atts);
 
     $('#replay-btn').html('Loading motion data...');
@@ -38,6 +47,7 @@ function getReplayPage(id){
             working = false;
             // console.log(reMsg);
             // mtnArr = new Array();
+            $('#contributor').html(reMsg.contributor);
             $('#replay-btn').html('Replay this motion now!');
             $('#replay-btn').removeClass('disabled');
             mtnArr = reMsg.mtnArr.split(':'); 
@@ -48,7 +58,7 @@ function getReplayPage(id){
             index = 0;
             isReplay = 1;
             // alert($('#start-time').html());
-            playerObj.seekTo($('#start-time').html(), true);
+            rplayerObj.seekTo($('#start-time').html(), true);
         }
 
     });
@@ -56,7 +66,9 @@ function getReplayPage(id){
 
 
 function onYouTubePlayerReady(playerId) {
-    playerObj = document.getElementById("myRePlayer");    
+    rplayerObj = document.getElementById("myRePlayer");   
+    playerObj = document.getElementById("myPlayer");    
+
 }
 
 
@@ -103,7 +115,7 @@ function k_init() {
 function k_animate() {
     requestAnimationFrame(k_animate);
     if(isReplay){
-        if(playerObj.getPlayerState()==1)
+        if(rplayerObj.getPlayerState()==1)
             replayMtn();
     }
     k_render();
@@ -144,7 +156,7 @@ function replayMtn(){
                         
                         isReplay = 0;
 
-                        playerObj.stopVideo();
+                        rplayerObj.stopVideo();
 
                         $('#replay-btn').html('Replay this motion now!');
 						continue;

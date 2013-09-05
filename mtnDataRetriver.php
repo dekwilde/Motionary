@@ -52,7 +52,7 @@
        // to close file
       fclose($fp);
 
-      echo '{"status":1, "mtnArr":"'.$mtnStr.'"}';
+      echo '{"status":1, "mtnArr":"'.$mtnStr.'", "contributor":"'.$row['onickName'].'"}';
   }
 
 

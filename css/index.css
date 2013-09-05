@@ -66,6 +66,10 @@ a>.label{
 	text-decoration: none;
 }
 
+.modal-content{
+	background:#EEE;
+}
+
 .navbar{
 	opacity: 0.9;
 }

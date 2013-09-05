@@ -48,7 +48,13 @@
 		$listAllMotion = listAllMotion($alphaid);
 
 		$out['content'] = $library.'<div class="panel panel-default col-lg-8 col-lg-offset-2"><div class="row">
-		<div class="panel-body col-lg-5"><div id="video_sec"><img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;"></div></div>
+		<div class="panel-body col-lg-5">
+			<div id="video_sec">
+				<img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;">
+			</div>
+			<button class="btn btn-success btn-lg btn-block" id="play-video-btn">Play from '.$start.'s to '.$end.'s</button>
+
+		</div>
 			<div class="panel-body col-lg-7">
 			<div class="panel panel-info">
 			<div class="panel-heading">
@@ -87,9 +93,9 @@
 		<!-- Modal -->
 		  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		    <div class="modal-dialog" style="width:900px;">
-		      <div class="modal-content">
+		      <div class="modal-content" style="">
 		        <div class="modal-header">
-		          <h4 class="modal-title">Replay Page</h4>
+  						<h1>3D Motion Replayer<small>   motion contributed by <span id="contributor"><span></small></h1>
 		        </div>
 		        <div class="modal-body row">
 		        <div class="col-lg-5 col-lg-offset-1">
