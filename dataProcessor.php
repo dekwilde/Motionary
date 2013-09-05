@@ -5,10 +5,12 @@
 	require_once('lib/PhpConsole.php');
 	PhpConsole::start();
 	
+	//initial the error array
 	$errors = array();
 	$arrs = array();
 
 	if(isGET('upduser')&&isLogin()){
+		//this block is for user update page.
 		$arr = array(
 			'nickName' => filter_input(INPUT_POST,'nickName',FILTER_CALLBACK,array('options'=>'validate_text')),
 			'budget' => filter_input(INPUT_POST,'budget',FILTER_CALLBACK,array('options'=>'validate_text'))
@@ -22,7 +24,8 @@
 		updateRequest($arr);
 		echo '{"status":1}';
 	}else if(isGET('reqvid')&&isLogin()){
-
+		//this block is for video request page.
+		//error detection
 		if(! ($arrs['ytoutubeID'] = filter_input(INPUT_POST,'vid',FILTER_CALLBACK,array('options'=>'validate_text')))){
 			$errors['vid'] = 'Please specify the video ID';
 		}
@@ -43,7 +46,7 @@
 			$errors['period'] = 'Please specify the period';
 		}
 
-
+		// if there are errors, return status = 0;
 		if(!empty($errors)){
 			echo '{"status":0, "errors":'.json_encode($errors).'}';
 		}else{

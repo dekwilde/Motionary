@@ -1,4 +1,5 @@
 <?php
+  //this file is used to store motion data to server and retrieve motion data from .txt file
   $out['self'] = 'mtnDataRetriver';
   include "connectSql.php";
   require "header.php";

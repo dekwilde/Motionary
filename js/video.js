@@ -5,13 +5,14 @@ var index = 0;
 var mtnArr;
 var isReplay = 0;
 var startTime = 0;
+var playerObj;
 
 window.onload = function() {
 	var params = { allowScriptAccess: "always" };
 	var atts = { id: "myPlayer" };
 	var videoId = $("#ytoutubeID").html();
 
-	swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=ytplayer&version=3",
+	swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=replayplayer&version=3",
 		"video_sec", "300", "250", "8", null, null, params, atts);
 	k_init();
 	k_animate();
@@ -20,9 +21,19 @@ window.onload = function() {
 
 
 function getReplayPage(id){
+    // this function is called to initialize the replay page when users click the replay this motion btn.
     var working = true;
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "myRePlayer" };
+    var videoId = $("#ytoutubeID").html();
+
+    //load the video
+    swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=ytplayer&version=3",
+        "video_replay_sec", "300", "300", "8", null, null, params, atts);
+
     $('#replay-btn').html('Loading motion data...');
     $('#replay-btn').addClass('disabled');
+
     $.post("/kinect/mtnDataRetriver.php/retrieve", {mid: id}, function(reMsg){
             working = false;
             // console.log(reMsg);
@@ -31,14 +42,24 @@ function getReplayPage(id){
             $('#replay-btn').removeClass('disabled');
             mtnArr = reMsg.mtnArr.split(':'); 
     },'json');
+
     $('#replay-btn').click(function(){
         if(!working){    
             index = 0;
             isReplay = 1;
+            // alert($('#start-time').html());
+            playerObj.seekTo($('#start-time').html(), true);
         }
 
     });
 }
+
+
+function onYouTubePlayerReady(playerId) {
+    playerObj = document.getElementById("myRePlayer");    
+}
+
+
 
 function k_init() {
     var k_container = document.getElementById('area_motion');
@@ -81,8 +102,10 @@ function k_init() {
 
 function k_animate() {
     requestAnimationFrame(k_animate);
-    if(isReplay)    
-        replayMtn();
+    if(isReplay){
+        if(playerObj.getPlayerState()==1)
+            replayMtn();
+    }
     k_render();
     // console.log(new Date().getTime());
 }
@@ -98,7 +121,7 @@ function k_render() {
 
 
 
-
+//replay function
 function replayMtn(){
 	k_camera.position.z = 800;
 	k_camera.position.y = -350;
@@ -118,7 +141,11 @@ function replayMtn(){
                             object.position.z = 5000;
                             
                         }    
+                        
                         isReplay = 0;
+
+                        playerObj.stopVideo();
+
                         $('#replay-btn').html('Replay this motion now!');
 						continue;
 					}
@@ -133,6 +160,7 @@ function replayMtn(){
 	                object.position.z = - (tempArr[4] / 5);
 	                // console.log(i+"=>"+object.position.x+", "+object.position.y+", "+object.position.z);
 	}
+
 	index++;
-	console.log(index);
+	// console.log(index);
 }
