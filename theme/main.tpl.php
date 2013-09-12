@@ -29,33 +29,31 @@ include "connectSql.php";
 	<script type="text/javascript">
 	    jQuery(document).ready(function() {
 	    	jQuery("abbr.timeago").timeago();	
-	    	
 	    	$('#input-search-tag').keyup(function(e){	
 	    		e.preventDefault();
 		    	if(e.keyCode==13){
-		    		var data = $(this).html();
+		    		var data = $(this).val();
 		    		console.log(data);
 		    		NProgress.start();		
 		    		$.post('/kinect/search.php/info',{tag: data},function(msg){
 		    			NProgress.done();
+		    			console.log(msg);
 		    			if(msg.status==1){
 		    				console.log("status "+msg.status);
-		    				$('.area_body').html('Result:');
-		    				// location.reload();
+		    				var htmlfarg = 'Result:<br/>';
+		    				var resultVideo = msg.result;
+		    				for(var i = 0; i<resultVideo.length ;i++){
+		    					htmlfarg += '<a href="/kinect/video.php/dtls/'+resultVideo[i]+'" target=_blank>'+resultVideo[i]+'</a><br/>';
+		    				}
+		    				$('.area_body').html(htmlfarg);
+		    			}else if(msg.status==0){
+		    				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Sorry!</h1> We could not find the related motions whose tag is <span class="label label-danger">'+msg.tag+'</span></div></div>');
 		    			}
 		    		},'json');
 		    	}
 			});
 	    });
 	    
-		// function searchTag(){
-		// 	$("#form-search-tag-btn").click();
-		// }
-		// $('#form-search-tag-input').keypress(function(e){
-		// 	if (e.which==13) {
-		// 		$('#form-search-tag').submit();
-		// 	}
-		// });
     </script>
 </head>
 <body>

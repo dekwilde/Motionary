@@ -36,6 +36,7 @@
 
 		// Split the tags & insert to tagData table
 		$tag_split = explode(",", $arr['tag']);
+		mysql_query("UPDATE videoData SET identity = '".$alpha."' WHERE vid =".$vid);
 
 		foreach($tag_split as &$tagName){
 			$tagData = searchTagByName($tagName);
@@ -44,14 +45,12 @@
 				$tid = mysql_insert_id();
 				mysql_query("INSERT INTO tagMap (vid, tid) VALUES ('".$vid."', '".$tid."')");
 			}else{
-				$tid = mysql_query("SELECT tid FROM tagData WHERE tagName='".$tagName."'");
+				$array = mysql_fetch_array(mysql_query("SELECT tid FROM tagData WHERE tagName='".$tagName."'"));
+				$tid = $array['tid'];
 				mysql_query("INSERT INTO tagMap (vid, tid) VALUES ('".$vid."', '".$tid."')");
 			}
 		}
 
-		$alpha = alphaID(mysql_insert_id(),false,7, 'KOvideo99623773in');
-
-  		mysql_query("UPDATE videoData SET identity = '".$alpha."' WHERE vid =".$vid);
 
   		return $alpha;
 	}
@@ -76,6 +75,7 @@
 				if($row['owner']==$_SESSION['mail']){
 					$hasContribute = true;
 				}
+
 				$htmlFrag .= '
 					  <li class="list-group-item">
 					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
