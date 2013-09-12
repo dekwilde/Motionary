@@ -12,12 +12,15 @@ window.onload = function() {
 	var params = { allowScriptAccess: "always" };
 	var atts = { id: "myPlayer" };
 	var videoId = $("#ytoutubeID").html();
+    // var playTimer;
 
-	swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=ytplayer&version=3",
+	swfobject.embedSWF("http://swf.tubechop.com/tubechop.swf?vurl="+videoId+"&start="+$('#start-time').html()+"&end="+$("#end-time").html(),
 		"video_sec", "289", "250", "8", null, null, params, atts);
 
     $('#play-video-btn').click(function(){
-        playerObj.seekTo($('#start-time').html(), true);
+        // clearTimeout(playTimer);
+        // playerObj.seekTo($('#start-time').html(), true);
+        // playTimer = setTimeout(function(){playerObj.stopVideo()}, parseInt(($('#period').html()))*1000);
     });
 
 	k_init();
@@ -34,7 +37,7 @@ function getReplayPage(id){
     var videoId = $("#ytoutubeID").html();
 
     //stop playing the video in video.php
-    playerObj.stopVideo();
+    // playerObj.stopVideo();
 
     //load the video
     swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=replayplayer&version=3",
@@ -50,6 +53,14 @@ function getReplayPage(id){
             $('#contributor').html(reMsg.contributor);
             $('#replay-btn').html('Replay this motion now!');
             $('#replay-btn').removeClass('disabled');
+            $('#star').raty({ path: 'http://lockys.hopto.org/kinect/js/rat-lib/img/', size     : 24,
+                              starHalf : 'star-half-big.png',
+                              starOff  : 'star-off-big.png',
+                              starOn   : 'star-on-big.png', 
+                              click: function(score, evt) {
+                                alert('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt);
+                              } 
+                            });
             mtnArr = reMsg.mtnArr.split(':'); 
     },'json');
 

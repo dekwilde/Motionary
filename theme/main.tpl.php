@@ -30,6 +30,32 @@ include "connectSql.php";
 	    jQuery(document).ready(function() {
 	    	jQuery("abbr.timeago").timeago();	
 	    });
+	    $('#form-search-tag').submit(function(e){
+			e.preventDefault();
+			if(working)
+				return;
+			working = true;
+			var data = $(this).serialize();
+			console.log(data);
+			NProgress.start();		
+			$.post('/kinect/search.php/info',data,function(msg){
+				NProgress.done();
+				working = false;
+				if(msg.status==1){
+					console.log("status "+msg.status);
+	    	        location.reload();
+				}
+			},'json');
+
+		});
+		function searchTag(){
+			$("#form-search-tag-btn").click();
+		}
+		// $('#form-search-tag-input').keypress(function(e){
+		// 	if (e.which==13) {
+		// 		$('#form-search-tag').submit();
+		// 	}
+		// });
     </script>
 </head>
 <body>
@@ -43,9 +69,12 @@ include "connectSql.php";
 			    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
 			    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
 			  </ul>
-			  <form class="navbar-form pull-left" action="">
-			  	<input type="text" class="form-control col-lg-8" placeholder="Search Motion(s)">
+			  <form class="navbar-form pull-left" id="form-search-tag">
+			  	<!-- action="/kinect/search.php"> -->
+			  	<input type="text" class="form-control col-lg-8" onKeydown="if(event.keyCode == 13){searchTag();}" placeholder="Search Motion(s)">
+			  	<input type="submit" style="display:none;" id="form-search-tag-btn">
 			  </form>
+
 			  <!-- Check if the user log in. -->
 			  <?php
 			  	if(isLogin()){

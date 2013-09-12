@@ -39,8 +39,8 @@
 
 	function updateRequest($arr){
 		// alert($arr);
-		// return mysql_query("UPDATE userData SET nickName = '".$arr['nickName']."' WHERE email='".$mail."'");
-		return true;
+		return mysql_query("UPDATE videodata SET budget = '".$arr['budget']."', deadline = '".$arr['addTime']."' WHERE identity='".$arr['identity']."'");
+		// return true;
 	}
 
 	function isLogin()

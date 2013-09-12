@@ -64,7 +64,6 @@ window.onload = function() {
 	//When user update their information 
 
     $('#form-user-update').submit(function(e){
-    	alert();
 		e.preventDefault();
 		if(working)
 			return;
@@ -111,6 +110,7 @@ window.onload = function() {
 
 
 function onYouTubePlayerReady(playerId) {
+	console.log(playerId);
 	playerObj = document.getElementById("myPlayer");
 	playerObj.playVideo();
 	$(function() {

@@ -31,15 +31,38 @@
   		'".sprintf('%u',ip2long($arr['ip']))."'
   		)");
 
+		$vid = mysql_insert_id();
+		$alpha = alphaID($vid,false,7, 'KOvideo99623773in');
+
+		// Split the tags & insert to tagData table
+		$tag_split = explode(",", $arr['tag']);
+
+		foreach($tag_split as &$tagName){
+			$tagData = searchTagByName($tagName);
+			if(mysql_num_rows($tagData) < 1){
+				mysql_query("INSERT INTO tagData (tagName) VALUES ('".$tagName."')");
+				$tid = mysql_insert_id();
+				mysql_query("INSERT INTO tagMap (vid, tid) VALUES ('".$vid."', '".$tid."')");
+			}else{
+				$tid = mysql_query("SELECT tid FROM tagData WHERE tagName='".$tagName."'");
+				mysql_query("INSERT INTO tagMap (vid, tid) VALUES ('".$vid."', '".$tid."')");
+			}
+		}
+
 		$alpha = alphaID(mysql_insert_id(),false,7, 'KOvideo99623773in');
 
-  		mysql_query("UPDATE videoData SET identity = '".$alpha."' WHERE vid =".mysql_insert_id());
+  		mysql_query("UPDATE videoData SET identity = '".$alpha."' WHERE vid =".$vid);
 
   		return $alpha;
 	}
 
 	function searchVideoByID($alphaID){
 		return mysql_query("SELECT * FROM videoData WHERE identity='".$alphaID."'");
+	}
+
+	// Find tid from tagData table
+	function searchTagByName($tagName){
+		return mysql_query("SELECT * FROM tagData WHERE tagName='".$tagName."'");
 	}
 
 	function listAllmotion($vid){
@@ -56,6 +79,8 @@
 				$htmlFrag .= '
 					  <li class="list-group-item">
 					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
+					    <div id="star'.$row['mid'].'">'.$row['score'].'</div>
+					    <javascript></javascript>
 					    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg" id="'.$row['mid'].'" onclick="getReplayPage('.$row['mid'].');">Replay this Motion!</a>
 					  </li>';
 			}	
