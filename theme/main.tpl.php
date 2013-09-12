@@ -29,28 +29,28 @@ include "connectSql.php";
 	<script type="text/javascript">
 	    jQuery(document).ready(function() {
 	    	jQuery("abbr.timeago").timeago();	
+	    	
+	    	$('#input-search-tag').keyup(function(e){	
+	    		e.preventDefault();
+		    	if(e.keyCode==13){
+		    		var data = $(this).html();
+		    		console.log(data);
+		    		NProgress.start();		
+		    		$.post('/kinect/search.php/info',{tag: data},function(msg){
+		    			NProgress.done();
+		    			if(msg.status==1){
+		    				console.log("status "+msg.status);
+		    				$('.area_body').html('Result:');
+		    				// location.reload();
+		    			}
+		    		},'json');
+		    	}
+			});
 	    });
-	    $('#form-search-tag').submit(function(e){
-			e.preventDefault();
-			if(working)
-				return;
-			working = true;
-			var data = $(this).serialize();
-			console.log(data);
-			NProgress.start();		
-			$.post('/kinect/search.php/info',data,function(msg){
-				NProgress.done();
-				working = false;
-				if(msg.status==1){
-					console.log("status "+msg.status);
-	    	        location.reload();
-				}
-			},'json');
-
-		});
-		function searchTag(){
-			$("#form-search-tag-btn").click();
-		}
+	    
+		// function searchTag(){
+		// 	$("#form-search-tag-btn").click();
+		// }
 		// $('#form-search-tag-input').keypress(function(e){
 		// 	if (e.which==13) {
 		// 		$('#form-search-tag').submit();
@@ -69,11 +69,10 @@ include "connectSql.php";
 			    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
 			    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
 			  </ul>
-			  <form class="navbar-form pull-left" id="form-search-tag">
-			  	<!-- action="/kinect/search.php"> -->
-			  	<input type="text" class="form-control col-lg-8" onKeydown="if(event.keyCode == 13){searchTag();}" placeholder="Search Motion(s)">
-			  	<input type="submit" style="display:none;" id="form-search-tag-btn">
-			  </form>
+			  
+
+
+			  <input type="text" class="navbar-form pull-left form-control col-lg-8" id="input-search-tag" placeholder="Search Motion(s)">
 
 			  <!-- Check if the user log in. -->
 			  <?php

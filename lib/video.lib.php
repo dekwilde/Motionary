@@ -97,15 +97,19 @@
 		
 
 		while ($row = mysql_fetch_array($result)) {
-			$htmlFrag .= '<div class="col-sm-6 col-md-3 video-block" style="margin-bottom:5px;">
-			<a class="list-video-btn" href="/kinect/video.php/dtls/'.$row['identity'].'"><div class="thumbnail">
-			<img class="video-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
-			<div class="caption">
-				'.$row['ytoutubeID'].'
-			</div>
-			<div class="caption" style="text-align:right;">
-				Requested <abbr class="timeago" title="'.intoISOTimestamp($row['requestTime']).'"></abbr></div>
-			</div></a>
+			
+			$htmlFrag .= '
+			<div class="col-sm-6 col-md-3 video-block" style="margin-bottom:5px;">
+				<a class="list-video-btn" href="/kinect/video.php/dtls/'.$row['identity'].'">
+					<div class="thumbnail">
+						<img class="video-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
+							<div class="caption">
+							'.$row['ytoutubeID'].'
+							</div>
+						<div class="caption" style="text-align:right;">
+							Requested <abbr class="timeago" title="'.intoISOTimestamp($row['requestTime']).'"></abbr></div>
+						</div>
+				</a>
 			</div>';
 
 		}

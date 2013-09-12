@@ -16,7 +16,9 @@
 		
 		//include the libraries we need for this page.
 
-		$library = '<script type="text/javascript" src="/kinect/js/video.js"></script><script type="text/javascript" src="/kinect/js/Three.js"></script><script type="text/javascript" src="/kinect/js/rat-lib/jquery.raty.js"></script>';
+		$library = '<script type="text/javascript" src="/kinect/js/video.js"></script>
+		<script type="text/javascript" src="/kinect/js/Three.js"></script>
+		<script type="text/javascript" src="/kinect/js/rat-lib/jquery.raty.js"></script>';
 
 		//Get video details from database with sql.
 		$result = mysql_fetch_array(searchVideoByID($alphaid));
@@ -51,32 +53,34 @@
 		//listAllMotion is defined in the video.lib.php
 		$listAllMotion = listAllMotion($alphaid);
 
-		$out['content'] = $library.'<div class="panel panel-default col-lg-8 col-lg-offset-2"><div class="row">
-		<div class="panel-body col-lg-5">
-			<div id="video_sec">
-				<img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;">
-			</div>
-			<button class="btn btn-success btn-lg btn-block disabled" id="play-video-btn">Only play from '.$start.'s to '.$end.'s</button>
+		$out['content'] = $library.'
+		<div class="panel panel-default col-lg-8 col-lg-offset-2">
+			<div class="row">
+				<div class="panel-body col-lg-5">
+					
+					<div id="video_sec">
+						<img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;">
+					</div>
+					<button class="btn btn-success btn-lg btn-block disabled" id="play-video-btn">Only play from '.$start.'s to '.$end.'s</button>
 
-		</div>
-			<div class="panel-body col-lg-7">
-			<div class="panel panel-info">
-			<div class="panel-heading">
-			<h3 class="panel-title">Request Informations</h3>
-			</div>
-			<div class="panel-body">
-				<h5>Youtube\'s ID: </h5><a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank>'
-				.$ytoutubeID.'</a><br/>
-				<h5>Period:</h5>
-				Start from <span id="start-time">'.$start.'</span>s to <span id="end-time">'.$end.'</span>s. (<span id="period">'.($end-$start).'</span> seconds)
-				<h5>Deadline: </h5><span class="label label-danger" title="Deadline is '.$deadDate.'">'.$remainDays.'</span><br/>
-				<h5>Budget: </h5>'.$budget.'(NTD)<br/>
-				<h5>Tag(s): </h5>'.generateTagLink($tag).'<br/><br/>'.$reqTimeTexts.'
-			</div>
-			</div>
-				
-			</div>
-		</div>';
+				</div>
+				<div class="panel-body col-lg-7">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Request Informations</h3>
+						</div>
+						<div class="panel-body">
+							<h5>Youtube\'s ID: </h5><a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank>'
+							.$ytoutubeID.'</a><br/>
+							<h5>Period:</h5>
+							Start from <span id="start-time">'.$start.'</span>s to <span id="end-time">'.$end.'</span>s. (<span id="period">'.($end-$start).'</span> seconds)
+							<h5>Deadline: </h5><span class="label label-danger" title="Deadline is '.$deadDate.'">'.$remainDays.'</span><br/>
+							<h5>Budget: </h5>'.$budget.'(NTD)<br/>
+							<h5>Tag(s): </h5>'.generateTagLink($tag).'<br/><br/>'.$reqTimeTexts.'
+						</div>
+					</div>
+				</div>
+			</div>';
 		
 		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
 			if($_SESSION['mail']==$owner){
@@ -92,7 +96,8 @@
 		}
 
 		//list the motion
-		$out['content'] .= '<div class="row">
+		$out['content'] .= '
+		<div class="row">
 			<div class="panel-body">
 				'.$listAllMotion['htmlFrag'].'
 			</div>

@@ -73,6 +73,11 @@ function getReplayPage(id){
         }
 
     });
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        index = 0;
+        isReplay = 0;
+    })
 }
 
 
