@@ -210,9 +210,8 @@
 						</div>
 
 						<div class="form-group">
-						<label for="TimeNeeded">More Time:</label>
-							<div class="input-group">
-								<span class="input-group-addon">You need</span>
+							<div class="input-group col-lg-12">
+								<span class="input-group-addon">I need</span>
 								<select name="MoreTimeNeeded" class="form-control">
 									<option>0</option>
 									<option>1</option>
@@ -235,10 +234,9 @@
 						<input type="text" name="unixtime" class="form-control" style="display:none;" value="'.$unixTime.'">
 
 						<div class="form-group">
-						<label for="tag" class="col-lg-2 control-label">Tag(s):</label>
-						<div class="col-lg-10">
-						'.generateTagLink($tag).'
-						</div>
+						<label for="tag" class="col-lg-2 control-label">Tag(s):</label><br/><br/>
+						<input name="tags" id="mySingleField" value="'.$tag.'" disabled="true" style="display:none;">
+                  		<ul id="singleFieldTags"></ul>
 						</div>
 						<button id="btn-upd-request" type="submit" class="btn btn-primary">Finish Editting</button>
 					</form>

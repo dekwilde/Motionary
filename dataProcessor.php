@@ -62,6 +62,10 @@
 			echo '{"status":1, "alphaid":"'.$alphaid.'"}'; // return successful msg to the client.
 		}
 
+	}else if(isGET('rate')&&isLogin()){
+
+		echo '{"status":1}';
+
 	}else{
 		echo '{"status":2}';		
 	}

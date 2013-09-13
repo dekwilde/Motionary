@@ -82,6 +82,10 @@ a>.label{
 	margin-left: 10px;
 }
 
+.ui-autocomplete{
+	z-index: 999999999;
+
+}
 
 .video-block:hover .video-thumbnail{
 	-webkit-filter: grayscale(100%);

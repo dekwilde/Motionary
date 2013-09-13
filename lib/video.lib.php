@@ -79,8 +79,10 @@
 				$htmlFrag .= '
 					  <li class="list-group-item">
 					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
-					    <div id="star'.$row['mid'].'">'.$row['score'].'</div>
-					    <javascript></javascript>
+					    <div id="star'.$row['mid'].'"></div>
+					    <script>
+							$("#star'.$row['mid'].'").raty({ path: "http://lockys.hopto.org/kinect/js/rat-lib/img/", readOnly: true, score: '.$row['score'].' });
+					    </script>
 					    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg" id="'.$row['mid'].'" onclick="getReplayPage('.$row['mid'].');">Replay this Motion!</a>
 					  </li>';
 			}	

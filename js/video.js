@@ -41,7 +41,7 @@ function getReplayPage(id){
 
     //load the video
     swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=replayplayer&version=3",
-        "video_replay_sec", "300", "300", "8", null, null, params, atts);
+        "video_replay_sec", "300", "350", "8", null, null, params, atts);
 
     $('#replay-btn').html('Loading motion data...');
     $('#replay-btn').addClass('disabled');
@@ -58,6 +58,9 @@ function getReplayPage(id){
                               starOff  : 'star-off-big.png',
                               starOn   : 'star-on-big.png', 
                               click: function(score, evt) {
+                                $.post("/kinect/dataProcessor.php/rate",{scores : score},function(reMsg){
+                                    console.log(reMsg.status);
+                                },"json");
                                 alert('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt);
                               } 
                             });
