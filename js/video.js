@@ -23,6 +23,22 @@ window.onload = function() {
         // playTimer = setTimeout(function(){playerObj.stopVideo()}, parseInt(($('#period').html()))*1000);
     });
 
+
+    $('#deleteBtn').click(function(){
+        console.log('delete');
+        if(confirm("注意!確定要刪除嗎？")){
+            $.post("/kinect/dataProcessor.php/deletev",{alphaid:$('#alphaid').html()},function(reMsg){
+                if(reMsg.status==1){
+                    window.location = "/kinect/video.php";
+                }
+            },"json");
+        }
+        else{
+            
+        }
+        
+    });
+
 	k_init();
 	k_animate();
 

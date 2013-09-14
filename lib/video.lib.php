@@ -92,6 +92,34 @@
 		return $rMsg;
 	}
 
+	function listUserMotion($owner){
+		$result = mysql_query("SELECT * FROM motiondata WHERE owner ='".$owner."' ORDER BY mid DESC");
+		$htmlFrag = '<ul class="list-group">
+					  <li class="list-group-item" style="background: #eee;"><span class="glyphicon glyphicon-align-justify"></span> There are '.mysql_num_rows($result).' motion(s)...<br/></li>';
+		$hasContribute = false;
+
+		if($result){
+			while ($row = mysql_fetch_array($result)) {
+				if($row['owner']==$_SESSION['mail']){
+					$hasContribute = true;
+				}
+
+				$htmlFrag .= '
+					  <li class="list-group-item">
+					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
+					    <div id="star'.$row['mid'].'"></div>
+					    <script>
+							$("#star'.$row['mid'].'").raty({ path: "http://lockys.hopto.org/kinect/js/rat-lib/img/", readOnly: true, score: '.$row['score'].' });
+					    </script>
+					    <a data-toggle="modal" href="/kinect/video.php/dtls/'.$row['vid'].'" class="btn btn-primary btn-lg" id="'.$row['mid'].'" ">Go to Request!</a>
+					  </li>';
+			}	
+		}
+		$htmlFrag .= '</ul>';
+		$rMsg = array('htmlFrag' => $htmlFrag, 'hasContribute' => $hasContribute );
+		return $rMsg;
+	}
+
 
 	function listAllVideo(){
 		$result = mysql_query("SELECT * FROM videoData ORDER BY vid DESC");
@@ -119,19 +147,36 @@
 	}
 
 	function listUserVideo(){
-		$result = mysql_query("SELECT * FROM videoData WHERE owner ='".$_SESSION['mail']."'");
+		$result = mysql_query("SELECT * FROM videoData WHERE owner ='".$_SESSION['mail']."' ORDER BY deadline DESC ");
 		$htmlFrag = '';
 		while ($row = mysql_fetch_array($result)) {
-				$htmlFrag .= '
-				<div class="col-sm-4" style="margin-bottom:5px;">
-				<a href="/kinect/video.php/dtls/'.$row['identity'].'"><div class="thumbnail">
-				<img src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
-				<div class="caption">'
-					.$row['ytoutubeID'].
-				'</div>
-				</div></a>
+			$unixTime = $row['deadline'];
+			$deadDate = new DateTime("@$unixTime");
+			if(time()<$unixTime){
+				$remainDays = floor(($unixTime - time())/(24*60*60)).' day(s) remained';
+				$deadDate = $deadDate->format('Y-m-d H:i:s');
+			}else{
+				$remainDays = 'Time is up!';
+				$deadDate = 'pasted';
+			}
+			$htmlFrag .= '
+			<div class="col-sm-4" style="margin-bottom:5px;">
+				<a href="/kinect/video.php/dtls/'.$row['identity'].'">
+				<div class="thumbnail">
+					<img src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
+					<div class="caption" style="text-align:right;">'
+						.$row['ytoutubeID'].
+					'</div>
+					<div class="caption" style="text-align:right;">
+						Requested <abbr class="timeago" title="'.intoISOTimestamp($row['requestTime']).'"></abbr>
+					</div>
+					<div class="caption" style="text-align:right;">
+						'.$remainDays.'
+					</div>
 				</div>
-				';
+				</a>
+			</div>
+			';
 		}
 		return $htmlFrag;
 	}

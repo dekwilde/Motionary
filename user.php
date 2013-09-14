@@ -5,6 +5,7 @@
 
 	$libray = '<script type="text/javascript" src="/kinect/js/request.js"></script>
   <script src="/kinect/js/lib/tag-it.min.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="/kinect/js/rat-lib/jquery.raty.js"></script>
   <link href="/kinect/css/jquery.tagit.css" rel="stylesheet" type="text/css">
   <link href="/kinect/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 	';
@@ -20,7 +21,7 @@
 		You Information
 		</a>
 		<a href="/kinect/user.php/vid" class="list-group-item">Your Requests</a>
-		<a href="#" class="list-group-item">Your Contributions</a>
+		<a href="/kinect/user.php/contribute" class="list-group-item">Your Contributions</a>
 		</div>
 		</div>
 		';
@@ -73,6 +74,15 @@
 		$out['content'] .= '
 		 <div class="col-lg-7">
 			'.listUserVideo().'
+		</div>
+		</div>
+		';
+
+	}else if(isGET('contribute')&&isLogin()){
+		$listUserMotion = listUserMotion($_SESSION['mail']);
+		$out['content'] .= '
+		 <div class="col-lg-7">
+			'.$listUserMotion['htmlFrag'].'
 		</div>
 		</div>
 		';

@@ -54,5 +54,14 @@
 		}
 	}
 
+	function isAdmin()
+	{
+		if(isset($_SESSION['login'])){
+			return $_SESSION['mail']=="locky4567@gmail.com"||$_SESSION['mail']=="richo2192000@gmail.com"||$_SESSION['mail']=="dan801212@gmail.com";
+		}else{
+			return false;
+		}
+	}
+
 
 ?>

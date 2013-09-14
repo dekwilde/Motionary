@@ -59,6 +59,7 @@
 		$out['content'] = $library.'
 		<div class="panel panel-default col-lg-8 col-lg-offset-2">
 			<div class="row">
+				<span id="alphaid" style="display:none">'.$alphaid.'</span>
 				<div class="panel-body col-lg-5">
 					
 					<div id="video_sec">
@@ -88,16 +89,23 @@
 		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
 			if($_SESSION['mail']==$owner){
 				$out['content'] .= '
-					<a class="btn btn-default btn-lg btn-block" href="/kinect/video.php/edit/'.$alphaid.'">Edit Your Request</a>
+					<a class="btn btn-warning btn-lg btn-block" href="/kinect/video.php/edit/'.$alphaid.'">Edit Your Request</a>
 				';
 			}
+
 			$out['content'] .= '
 				<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>
 			';
 		}else{
 			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You have already contributed or time is up.</button>';
 		}
-
+		
+		if(isAdmin()){
+				$out['content'] .= '
+					<button type="button" id="deleteBtn" class="btn btn-danger btn-lg btn-block">!!DELETE THIS VIDEO!!</button>
+				';
+		}
+		
 		//list the motion
 		$out['content'] .= '
 		<div class="row">

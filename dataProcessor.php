@@ -65,6 +65,11 @@
 	}else if(isGET('rate')&&isLogin()){
 
 		echo '{"status":1}';
+	}else if(isGET('deletev')&&isAdmin()){
+		mysql_query("DELETE FROM videodata WHERE identity='".$_POST['alphaid']."'");
+		mysql_query("DELETE FROM tagmap WHERE vid=".alphaID($_POST['alphaid'],true,7, 'KOvideo99623773in'));
+
+		echo '{"status":1}';
 	}else{
 		echo '{"status":2}';		
 	}
