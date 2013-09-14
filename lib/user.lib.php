@@ -39,7 +39,9 @@
 
 	function updateRequest($arr){
 		// alert($arr);
-		return mysql_query("UPDATE videodata SET budget = '".$arr['budget']."', deadline = '".$arr['addTime']."' WHERE identity='".$arr['identity']."'");
+		$ori_budget = mysql_fetch_array(mysql_query("SELECT budget FROM videodata WHERE identity='".$arr['identity']."'"));
+		$new_budget = $ori_budget['budget'] + $arr['budget'];
+		return mysql_query("UPDATE videodata SET budget = '".$new_budget."', deadline = '".$arr['addTime']."' WHERE identity='".$arr['identity']."'");
 		// return true;
 	}
 

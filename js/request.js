@@ -92,15 +92,15 @@ window.onload = function() {
 		working = true;
 		var data = $(this).serialize();
 		console.log(data);
-		$('#btn-upd-request').html('Updating...');
+		$('#btn-upd-request').html('Editting...');
 		NProgress.start();		
 		$.post('/kinect/dataProcessor.php/updrqst',data,function(msg){
 			NProgress.done();
 			working = false;
-			$('#btn-upd-request').html('Update your request');
+			$('#btn-upd-request').html('Edit this request');
 			if(msg.status==1){
 				console.log("status "+msg.status);
-    	        location.reload();
+    	        window.location = "/kinect/video.php/dtls/"+msg.identity;
 			}
 		},'json');
 

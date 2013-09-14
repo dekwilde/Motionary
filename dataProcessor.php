@@ -24,7 +24,7 @@
 			'identity' => filter_input(INPUT_POST,'identity',FILTER_CALLBACK,array('options'=>'validate_text'))
 		);
 		updateRequest($arr);
-		echo '{"status":1}';
+		echo '{"status":1,"identity":"'.$arr['identity'].'"}';
 	}else if(isGET('reqvid')&&isLogin()){
 
 		if(! ($arrs['ytoutubeID'] = filter_input(INPUT_POST,'vid',FILTER_CALLBACK,array('options'=>'validate_text')))){
@@ -65,7 +65,6 @@
 	}else if(isGET('rate')&&isLogin()){
 
 		echo '{"status":1}';
-
 	}else{
 		echo '{"status":2}';		
 	}

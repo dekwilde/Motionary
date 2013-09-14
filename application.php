@@ -6,12 +6,8 @@ include "connectSql.php";
 
 $libary = '';
 
-if(isGET('list')){
-	$out['content'] = listAllVideo();
-}
-else if(isGET('act')){
+if(isGET('act')&&isLogin()){
 	$vid = $_GET['act'];
-	
 	$libary .= '
 	<script src="/kinect/js/loadAvatar.js"></script>
 	<script type="text/javascript" src="/kinect/js/Three.js"></script>
@@ -44,7 +40,11 @@ else if(isGET('act')){
 
 }
 else{
-	redirect('application.php/list');
+	if(!isLogin()){
+		$out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
+	}else if(isLogin()){
+		redirect('application.php/act');
+	}
 }
 require 'footer.php';
 

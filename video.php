@@ -8,7 +8,10 @@
 	PhpConsole::start();
 
 
-	if(isGET('dtls')&&isLogin()){
+	if(isGET('list')){
+		$out['content'] = listAllVideo();
+	}
+	else if(isGET('dtls')&&isLogin()){
 		
 		//show video details (video.php/dtls/videoID)
 
@@ -210,6 +213,13 @@
 						</div>
 
 						<div class="form-group">
+						<label for="budget" class="col-lg-2 control-label">Budget:</label>
+						<div class="col-lg-10">
+						<input type="text" name="deadline"  class="form-control" value="'.$budget.'" disabled>
+						</div>
+						</div>
+
+						<div class="form-group">
 							<div class="input-group col-lg-12">
 								<span class="input-group-addon">I need</span>
 								<select name="MoreTimeNeeded" class="form-control">
@@ -225,10 +235,12 @@
 						</div>
 
 						<div class="form-group">
-						<label for="budget" class="col-lg-2 control-label">Budget:</label>
-						<div class="col-lg-10">
-						<input type="text" name="budget" class="form-control" value="'.$budget.'">
-						</div>
+							<div class="input-group col-lg-12">								
+								<span class="input-group-addon">Add</span>
+								<input type="text" name="budget" class="form-control" value="0">
+								<span class="input-group-addon">coins to this request.</span>
+
+							</div>	
 						</div>
 						<input type="text" name="identity" class="form-control" style="display:none;" value="'.$alphaid.'">
 						<input type="text" name="unixtime" class="form-control" style="display:none;" value="'.$unixTime.'">
@@ -238,7 +250,7 @@
 						<input name="tags" id="mySingleField" value="'.$tag.'" disabled="true" style="display:none;">
                   		<ul id="singleFieldTags"></ul>
 						</div>
-						<button id="btn-upd-request" type="submit" class="btn btn-primary">Finish Editting</button>
+						<button id="btn-upd-request" type="submit" class="btn btn-primary">Edit this request</button>
 					</form>
 					
 					<!--<h5>Youtube\'s ID: </h5><a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank>'
@@ -261,8 +273,11 @@
 		// $out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>This is not your video.</div></div>';
 	}else{
 		//if users does not login in.
-		$out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
-
+		if(!isLogin()){			
+			$out['content'] = '<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>';
+		}else{
+			redirect('video.php/list');
+		}
 	}
 	require 'footer.php';
 

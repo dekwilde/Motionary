@@ -189,7 +189,7 @@ include "connectSql.php";
 			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary</a>
 			  <ul class="nav navbar-nav">
 			    <li id="link-about"  class="disabled"><a href="/kinect/index.php">About</a></li>	  
-			    <li id="link-contribute"><a href="/kinect/application.php">Contribute</a></li>
+			    <li id="link-contribute"><a href="/kinect/video.php/list">Contribute</a></li>
 			    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
 			    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
 			  </ul>
