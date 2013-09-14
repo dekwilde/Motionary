@@ -186,7 +186,7 @@ include "connectSql.php";
 	<div class="navbar navbar-fixed-top navbar-inverse">
 		  <div class="container">
 
-			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary</a>
+			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary<sup>beta</sup></a>
 			  <ul class="nav navbar-nav">
 			    <li id="link-about"  class="disabled"><a href="/kinect/index.php">About</a></li>	  
 			    <li id="link-contribute"><a href="/kinect/video.php/list">Contribute</a></li>
@@ -229,7 +229,7 @@ include "connectSql.php";
     	}
     ?>
     <footer class="bs-footer">
-    	2013 Motionary_version_git is powered by <a href="http://zigfu.com/" target="_blank">Zigfu</a>.
+    	2013 Motionary <sup>beta</sup>  is powered by <a href="http://zigfu.com/" target="_blank">Zigfu</a>.
     </footer>
 
 </body>

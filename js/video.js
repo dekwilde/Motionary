@@ -7,6 +7,9 @@ var isReplay = 0;
 var startTime = 0;
 var rplayerObj;
 var playerObj;
+var mouseX = 0, mouseY = 0,
+windowHalfX = window.innerWidth / 2,
+windowHalfY = window.innerHeight / 2;
 
 window.onload = function() {
 	var params = { allowScriptAccess: "always" };
@@ -44,6 +47,29 @@ window.onload = function() {
 
 }
 
+function tagSearch(data){
+                    alert('het');
+                    $.post('/kinect/search.php/info',{tag: data},function(msg){
+                        // console.log(msg);
+                        if(msg.status==1){
+                            console.log("status "+msg.status);
+                            var htmlfarg = 'Result:<br/>';
+                            var identities = msg.identity;
+                            var ytoutubeIDs = msg.ytoutubeID;
+                            var requestTimes = msg.requestTime;
+
+                            for(var i = 0; i<identities.length ;i++){
+                                htmlfarg += '<div class="col-sm-6 col-md-3 video-block" style="margin-bottom:5px;"><a class="list-video-btn" href="/kinect/video.php/dtls/'+identities[i]+'"><div class="thumbnail"><img class="video-thumbnail" src="http://img.youtube.com/vi/'+ytoutubeIDs[i]+'/0.jpg" alt="..."><div class="caption">'+ytoutubeIDs[i]+'</div><div class="caption" style="text-align:right;">Requested <abbr class="timeago" title="'+requestTimes[i]+'"></abbr></div></div></div></a></div>';
+                            }
+                            $('.area_body').html(htmlfarg);
+                        }else if(msg.status==2){
+                            $('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Sorry!</h1> We could not find the related motions whose tag is <span class="label label-danger">'+msg.tag+'</span></div></div>');
+                        }else{
+                            $('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>');
+                        }
+                        jQuery("abbr.timeago").timeago();
+                    },'json');    
+}
 
 function getReplayPage(id){
     // this function is called to initialize the replay page when users click the replay this motion btn.
@@ -111,7 +137,7 @@ function onYouTubePlayerReady(playerId) {
 function k_init() {
     var k_container = document.getElementById('area_motion');
     var width = 400;
-    var height = 500;
+    var height = 350;
 
     k_camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
     
@@ -142,7 +168,9 @@ function k_init() {
         k_scene.add(sphere);
         skeletonPoints.push(sphere);
     }
-
+    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
 }
 ///Animating and rendering for three.js scene
@@ -158,20 +186,18 @@ function k_animate() {
 }
 
 function k_render() {
-    k_camera.position.x += (0 - k_camera.position.x ) * .05;
-    k_camera.position.y += (200 - k_camera.position.y ) * .05;
+    k_camera.position.x += (mouseX + 0 - k_camera.position.x ) * .05;
+    k_camera.position.y += (-mouseY + 200 - k_camera.position.y ) * .05;
     // console.log(k_camera);
     k_camera.lookAt(k_scene.position);
     // console.log(k_scene.position);
     k_renderer.render(k_scene, k_camera);
 }
 
-
-
 //replay function
 function replayMtn(){
 	k_camera.position.z = 800;
-	k_camera.position.y = -350;
+	// k_camera.position.y = -350;
 
 	for(var i = 0; i < skeletonPoints.length; i++) {
 					var tempArr;
@@ -210,4 +236,38 @@ function replayMtn(){
 
 	index++;
 	// console.log(index);
+}
+
+
+function onDocumentMouseMove(event) {
+
+    mouseX = event.clientX - windowHalfX;
+    mouseY = event.clientY - windowHalfY;
+
+}
+
+function onDocumentTouchStart( event ) {
+
+    if ( event.touches.length > 1 ) {
+
+        event.preventDefault();
+
+        mouseX = event.touches[ 0 ].pageX - windowHalfX;
+        mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+    }
+
+}
+
+function onDocumentTouchMove( event ) {
+
+    if ( event.touches.length == 1 ) {
+
+        event.preventDefault();
+
+        mouseX = event.touches[ 0 ].pageX - windowHalfX;
+        mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+    }
+
 }

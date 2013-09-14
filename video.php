@@ -16,7 +16,7 @@
 		//show video details (video.php/dtls/videoID)
 
 		$alphaid = $_GET['dtls'];
-		
+		$editBtnHTML = ''; $deleteBtn = '';
 		//include the libraries we need for this page.
 
 		$library = '<script type="text/javascript" src="/kinect/js/video.js"></script>
@@ -32,7 +32,7 @@
 		$userResult = mysql_fetch_array(searchUserBymail($owner));
 
 
-		//operate the video data.
+		//設定到期時間與request時間
 		$unixTime = $deadline;
 		$deadDate = new DateTime("@$unixTime");
 		if(time()<$unixTime){
@@ -47,6 +47,7 @@
 		//create the timeago 
 		$reqTimeTexts = 'Requested by '.$userResult['nickName'].' @ <abbr class="timeago" title="'.intoISOTimestamp($requestTime).'"></abbr>';
 
+		//取得youtube影片名稱
 		// $content = file_get_contents("http://youtube.com/get_video_info?video_id=".$ytoutubeID);
 		// parse_str($content, $ytarr);
 		// debug($ytarr['title']);
@@ -55,6 +56,19 @@
 
 		//listAllMotion is defined in the video.lib.php
 		$listAllMotion = listAllMotion($alphaid);
+
+		//是否顯示刪除鍵
+		if(isAdmin()){
+			$deleteBtnHTML = '
+			<span id="deleteBtn" class="glyphicon glyphicon-trash" style="cursor:pointer;"></span>
+			';
+		}
+		//是否顯示編輯鍵
+		if($_SESSION['mail']==$owner && time()<$unixTime){
+			$editBtnHTML = '
+			<a class="btn btn-warning btn-lg btn-block" href="/kinect/video.php/edit/'.$alphaid.'">Edit Your Request</a>
+			';
+		}
 
 		$out['content'] = $library.'
 		<div class="panel panel-default col-lg-8 col-lg-offset-2">
@@ -66,12 +80,12 @@
 						<img class="img-thumbnail" src="http://img.youtube.com/vi/'.$result['ytoutubeID'].'/0.jpg" style="width:300px;">
 					</div>
 					<button class="btn btn-success btn-lg btn-block disabled" id="play-video-btn">Only play from '.$start.'s to '.$end.'s</button>
-
+					'.$editBtnHTML.'
 				</div>
 				<div class="panel-body col-lg-7">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							<h3 class="panel-title">Request Informations</h3>
+							<h3 class="panel-title">Request Informations'.$deleteBtnHTML.'</h3>
 						</div>
 						<div class="panel-body">
 							<h5>Youtube\'s ID: </h5><a id="ytoutubeID" href="http://youtu.be/'.$ytoutubeID.'" target=_blank>'
@@ -87,11 +101,6 @@
 			</div>';
 		
 		if(!$listAllMotion['hasContribute'] && time()<$unixTime){
-			if($_SESSION['mail']==$owner){
-				$out['content'] .= '
-					<a class="btn btn-warning btn-lg btn-block" href="/kinect/video.php/edit/'.$alphaid.'">Edit Your Request</a>
-				';
-			}
 
 			$out['content'] .= '
 				<a class="btn btn-primary btn-lg btn-block" href="/kinect/application.php/act/'.$alphaid.'">Contribute Your Motion Now!</a>
@@ -100,11 +109,7 @@
 			$out['content'] .= '<button class="btn btn-primary btn-lg btn-block disabled">You have already contributed or time is up.</button>';
 		}
 		
-		if(isAdmin()){
-				$out['content'] .= '
-					<button type="button" id="deleteBtn" class="btn btn-danger btn-lg btn-block">!!DELETE THIS VIDEO!!</button>
-				';
-		}
+		
 		
 		//list the motion
 		$out['content'] .= '

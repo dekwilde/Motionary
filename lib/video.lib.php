@@ -77,13 +77,15 @@
 				}
 
 				$htmlFrag .= '
+					  <li class="list-group-item" style="background: #d9edf7;">'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr><li>
 					  <li class="list-group-item">
-					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
+					    Motion\'s Rating:
 					    <div id="star'.$row['mid'].'"></div>
 					    <script>
 							$("#star'.$row['mid'].'").raty({ path: "http://lockys.hopto.org/kinect/js/rat-lib/img/", readOnly: true, score: '.$row['score'].' });
 					    </script>
-					    <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg" id="'.$row['mid'].'" onclick="getReplayPage('.$row['mid'].');">Replay this Motion!</a>
+					    <br/><a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg" id="'.$row['mid'].'" onclick="getReplayPage('.$row['mid'].');"><span class="glyphicon glyphicon-play"></span> Replay and Rate this Motion!</a>
+
 					  </li>';
 			}	
 		}
@@ -95,7 +97,7 @@
 	function listUserMotion($owner){
 		$result = mysql_query("SELECT * FROM motiondata WHERE owner ='".$owner."' ORDER BY mid DESC");
 		$htmlFrag = '<ul class="list-group">
-					  <li class="list-group-item" style="background: #eee;"><span class="glyphicon glyphicon-align-justify"></span> There are '.mysql_num_rows($result).' motion(s)...<br/></li>';
+					  <li class="list-group-item" style="background: #eee;"><span class="glyphicon glyphicon-align-justify"></span> You have contributed '.mysql_num_rows($result).' motion(s)...<br/></li>';
 		$hasContribute = false;
 
 		if($result){
@@ -105,8 +107,9 @@
 				}
 
 				$htmlFrag .= '
+					  <li class="list-group-item" style="background: #d9edf7;">'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr><li>
 					  <li class="list-group-item">
-					    <p>'.$row['onickName'].' contributed a motion @ <abbr class="timeago" title="'.intoISOTimestamp($row['contributeTime']).'"></abbr></p>
+					    Motion\'s Rating:
 					    <div id="star'.$row['mid'].'"></div>
 					    <script>
 							$("#star'.$row['mid'].'").raty({ path: "http://lockys.hopto.org/kinect/js/rat-lib/img/", readOnly: true, score: '.$row['score'].' });
@@ -127,6 +130,18 @@
 		
 
 		while ($row = mysql_fetch_array($result)) {
+
+			$unixTime = $row['deadline'];
+			$deadDate = new DateTime("@$unixTime");
+
+			if(time()<$unixTime){
+				$remainDays = floor(($unixTime - time())/(24*60*60)).' day(s) remained';
+				$deadDate = $deadDate->format('Y-m-d H:i:s');
+
+			}else{
+				$remainDays = 'Time is up!';
+				$deadDate = 'pasted';
+			}
 			
 			$htmlFrag .= '
 			<div class="col-sm-6 col-md-3 video-block" style="margin-bottom:5px;">
@@ -134,7 +149,7 @@
 					<div class="thumbnail">
 						<img class="video-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
 							<div class="caption">
-							'.$row['ytoutubeID'].'
+							'.$row['ytoutubeID'].' <span class="label label-danger" title="Deadline is '.$deadDate.'">'.$remainDays.'</span>
 							</div>
 						<div class="caption" style="text-align:right;">
 							Requested <abbr class="timeago" title="'.intoISOTimestamp($row['requestTime']).'"></abbr></div>
@@ -149,6 +164,7 @@
 	function listUserVideo(){
 		$result = mysql_query("SELECT * FROM videoData WHERE owner ='".$_SESSION['mail']."' ORDER BY deadline DESC ");
 		$htmlFrag = '';
+
 		while ($row = mysql_fetch_array($result)) {
 			$unixTime = $row['deadline'];
 			$deadDate = new DateTime("@$unixTime");
@@ -160,23 +176,18 @@
 				$deadDate = 'pasted';
 			}
 			$htmlFrag .= '
-			<div class="col-sm-4" style="margin-bottom:5px;">
-				<a href="/kinect/video.php/dtls/'.$row['identity'].'">
-				<div class="thumbnail">
-					<img src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
-					<div class="caption" style="text-align:right;">'
-						.$row['ytoutubeID'].
-					'</div>
-					<div class="caption" style="text-align:right;">
-						Requested <abbr class="timeago" title="'.intoISOTimestamp($row['requestTime']).'"></abbr>
-					</div>
-					<div class="caption" style="text-align:right;">
-						'.$remainDays.'
-					</div>
-				</div>
+			<div class="col-sm-4 video-block" style="margin-bottom:5px;">
+				<a class="list-video-btn" href="/kinect/video.php/dtls/'.$row['identity'].'">
+					<div class="thumbnail">
+						<img class="video-thumbnail" src="http://img.youtube.com/vi/'.$row['ytoutubeID'].'/0.jpg" alt="...">
+							<div class="caption">
+							'.$row['ytoutubeID'].' <span class="label label-danger" title="Deadline is '.$deadDate.'">'.$remainDays.'</span>
+							</div>
+						<div class="caption" style="text-align:right;">
+							Requested <abbr class="timeago" title="'.intoISOTimestamp($row['requestTime']).'"></abbr></div>
+						</div>
 				</a>
-			</div>
-			';
+			</div>';
 		}
 		return $htmlFrag;
 	}
@@ -188,7 +199,7 @@
 		$htmlFrag = '';
 
 		foreach ($tagArr as $key => $value) {
-			$htmlFrag .= '<a class="btn-tag-link" href="#"><span class="label label-'.$labelArr[$key%6].'">'.$value.'</span></a>';
+			$htmlFrag .= ' <span class="label label-'.$labelArr[$key%6].'">'.$value.'</span>';
 		}
 
 		return $htmlFrag;
