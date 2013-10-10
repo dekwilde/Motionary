@@ -42,15 +42,15 @@ window.onload = function() {
 
 		var data = $(this).serialize()+'&tag='+$('#mySingleField').val();
 		console.log(data);
-		$('#btn-request-vid').html('Requesting...');
+		$('#btn-request-vid').html('送出中...');
 		NProgress.start();
 		$.post('/kinect/dataProcessor.php/reqvid',data,function(msg){
 			NProgress.done();	
 			working = false;
-			$('#btn-request-vid').html('Request');
+			$('#btn-request-vid').html('完成');
 			if(msg.status==1){
 				console.log("status "+msg.status);
-				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Congradulations!</h1>You have sent a video request successfully.<br/><br/><a class="btn btn-default btn-lg btn-block" href="/kinect/video.php/dtls/'+msg.alphaid+'">Check you request</a></div></div>');
+				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>太棒了!</h1>你成功送出了一個動作影片任務.<br/><br/><a class="btn btn-default btn-lg btn-block" href="/kinect/video.php/dtls/'+msg.alphaid+'">看看您的任務</a></div></div>');
 			}else{
 				$.each(msg.errors,function(k,v){
 					$('label[for='+k+']').append('<span class="label label-warning">'+v+'</span>');
@@ -70,12 +70,12 @@ window.onload = function() {
 		working = true;
 		var data = $(this).serialize();
 		console.log(data);
-		$('#btn-upd-user').html('Updating...');
+		$('#btn-upd-user').html('更新中...');
 		NProgress.start();		
 		$.post('/kinect/dataProcessor.php/upduser',data,function(msg){
 			NProgress.done();
 			working = false;
-			$('#btn-upd-user').html('Update your information');
+			$('#btn-upd-user').html('更新您的資訊');
 			if(msg.status==1){
 				console.log("status "+msg.status);
     	        location.reload();
@@ -92,12 +92,12 @@ window.onload = function() {
 		working = true;
 		var data = $(this).serialize();
 		console.log(data);
-		$('#btn-upd-request').html('Editting...');
+		$('#btn-upd-request').html('編輯中...');
 		NProgress.start();		
 		$.post('/kinect/dataProcessor.php/updrqst',data,function(msg){
 			NProgress.done();
 			working = false;
-			$('#btn-upd-request').html('Edit this request');
+			$('#btn-upd-request').html('完成編輯');
 			if(msg.status==1){
 				console.log("status "+msg.status);
     	        window.location = "/kinect/video.php/dtls/"+msg.identity;

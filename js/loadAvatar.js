@@ -5,8 +5,18 @@ var start;
 //This is the black kinectSkeletonBox div
 
 window.onload = function(){
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "myRecordPlayer" };
+    var videoId = $("#yvid").html();
+
     k_init();
     k_animate();
+    //stop playing the video in video.php
+    // playerObj.stopVideo();
+
+    //load the video
+    swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid=replayplayer&version=3",
+        "video_sec", "350", "350", "8", null, null, params, atts);
 }
 
 
@@ -55,12 +65,12 @@ function zigPluginLoaded() {
     console.log("zig plugin loaded");
     
     zig.addEventListener('userfound', function(user) {
-        $('#instruction').html('We got you! Please click the record button. :-)');
+        $('#instruction').html('我們偵測到你了！ 請按下「錄製」鍵 :)');
         current_user = user;
         current_user.addEventListener('userupdate', function(user) {
             //This is called every time the kinect has new user skeleton data
             if(isRecord){
-                $('#instruction').html('We are collecting you motion data.');
+                $('#instruction').html('收集動作資料中...');
             }
             if(!isReplay)
                 moveDots(user);
@@ -68,10 +78,10 @@ function zigPluginLoaded() {
         zig.addListener(current_user);
     });
     zig.addEventListener('userlost', function(user) {
-        console.log('We Lost user. ID: ' + user.id);
+        console.log('抱歉，我們偵測不到你，ID: ' + user.id);
         // sendData();
-        $('#record-btn').html('Record');
-        $('#instruction').html('Please stand in front of your kinect sensor and click Record Btn.');
+        $('#record-btn').html('錄製');
+        $('#instruction').html('請先按下「錄製」鍵後，再站到您的Kinect前面');
 
     });
 }

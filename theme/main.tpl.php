@@ -11,7 +11,7 @@ include "connectSql.php";
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Motionary - Find the motions you get interested in.</title>
+	<title>Motionary - 找到你想要的動作資料</title>
 	<!-- Style Sheet -->
 	<link rel="stylesheet" type="text/css" href="/kinect/css/bootstrap.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
@@ -29,6 +29,7 @@ include "connectSql.php";
 	    jQuery(document).ready(function() {
 	    	
 	    	jQuery("abbr.timeago").timeago();	
+	    	$('#coins').tooltip();
 	    	
 	    	$('#input-search-tag').keyup(function(e){	
 	    		e.preventDefault();
@@ -40,20 +41,20 @@ include "connectSql.php";
 		    			NProgress.done();
 		    			// console.log(msg);
 		    			if(msg.status==1){
-		    				console.log("status "+msg.status);
-		    				var htmlfarg = 'Result:<br/>';
 		    				var identities = msg.identity;
+		    				console.log(+"status "+msg.status);
+		    				var htmlfarg = '<h4>'+identities.length+' 筆與 <span class="label label-danger">'+msg.tag+'</span> 有關的影片:</h4>';
 		    				var ytoutubeIDs = msg.ytoutubeID;
 		    				var requestTimes = msg.requestTime;
 
 		    				for(var i = 0; i<identities.length ;i++){
-		    					htmlfarg += '<div class="col-sm-6 col-md-3 video-block" style="margin-bottom:5px;"><a class="list-video-btn" href="/kinect/video.php/dtls/'+identities[i]+'"><div class="thumbnail"><img class="video-thumbnail" src="http://img.youtube.com/vi/'+ytoutubeIDs[i]+'/0.jpg" alt="..."><div class="caption">'+ytoutubeIDs[i]+'</div><div class="caption" style="text-align:right;">Requested <abbr class="timeago" title="'+requestTimes[i]+'"></abbr></div></div></div></a></div>';
+		    					htmlfarg += '<div class="col-sm-6 col-md-3 video-block" style="margin-bottom:5px;"><a class="list-video-btn" target="_blank" href="/kinect/video.php/dtls/'+identities[i]+'"><div class="thumbnail"><img class="video-thumbnail" src="http://img.youtube.com/vi/'+ytoutubeIDs[i]+'/0.jpg" alt="..."><div class="caption">'+ytoutubeIDs[i]+'</div><div class="caption" style="text-align:right;">Requested <abbr class="timeago" title="'+requestTimes[i]+'"></abbr></div></div></div></a></div>';
 		    				}
 		    				$('.area_body').html(htmlfarg);
 		    			}else if(msg.status==2){
-		    				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Sorry!</h1> We could not find the related motions whose tag is <span class="label label-danger">'+msg.tag+'</span></div></div>');
+		    				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>不好意思!</h1> 現在沒有任何影片有關於 <span class="label label-danger">'+msg.tag+'</span></div></div>');
 		    			}else{
-		    				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>Error!</h1>Please Login in first to enjoy our service.</div></div>');
+		    				$('.area_body').html('<div class="panel panel-default col-lg-6 col-lg-offset-3" style="text-align:center;"><div class="panel-body"><h1>抱歉!</h1>請先用Google帳戶登入我們系統。</div></div>');
 		    			}
 		    			jQuery("abbr.timeago").timeago();
 		    		},'json');
@@ -186,28 +187,41 @@ include "connectSql.php";
 	<div class="navbar navbar-fixed-top navbar-inverse">
 		  <div class="container">
 
-			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary<sup>beta</sup></a>
+			  <a class="navbar-brand" href="/kinect/index.php"><span class="glyphicon glyphicon-home"></span> Motionary </a>
 			  <ul class="nav navbar-nav">
-			    <li id="link-about"  class="disabled"><a href="/kinect/index.php">About</a></li>	  
-			    <li id="link-contribute"><a href="/kinect/video.php/list">Contribute</a></li>
-			    <li id="link-request"><a href="/kinect/request.php">Request</a></li>
-			    <li id="link-contact"  class="disabled"><a href="/kinect/index.php">Contact us</a></li>	  
+			    <li id="link-request"><a href="/kinect/request.php">發佈任務</a></li>
+			    <li id="link-contribute">
+			    	<a data-toggle="dropdown" href="/kinect/video.php/list">任務清單</a>
+			    	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			    		<li>
+			    			<a href="/kinect/video.php/list">執行中任務</a>
+			    		</li>
+			    		<li>
+			    			<a href="/kinect/video.php/list/t">已完成任務</a>
+			    		</li>
+			    	</ul>
+			    </li>
+			    <li id="link-rate"><a href="/kinect/rate.php">評分</a></li>
+			    <li id="link-rank"  class=""><a href="/">排行榜</a></li>
+			    <li id="link-about"  class=""><a href="/kinect/index.php">關於</a></li>	  
 			  </ul>
 			  
 
 
-			  <input type="text" class="navbar-form pull-left form-control col-lg-8" id="input-search-tag" placeholder="Search Motion(s)">
+			  <input type="text" class="navbar-form pull-left form-control col-lg-8" id="input-search-tag" placeholder="搜尋動作資料">
 
 			  <!-- Check if the user log in. -->
 			  <?php
 			  	if(isLogin()){
-			  		$result = mysql_fetch_array(searchUserBymail($_SESSION['mail']));
-			  		if(!isset($_SESSION['nickName']))
+			  		if(!isset($_SESSION['nickName'])){
+			  			$result = mysql_fetch_array(searchUserBymail($_SESSION['mail']));
 			  			$_SESSION['nickName'] = $result['nickName'];
-			  		echo '<a href="/kinect/logout.php" class="btn btn-default navbar-btn pull-right" id="sign-btn">Log out</a><a href="/kinect/user.php" id="link-user-name" class="btn btn-primary navbar-btn pull-right"><span class="glyphicon glyphicon-user"></span> '.$_SESSION['nickName'].'<span class="badge">0</span></a>
+			  			$_SESSION['coin'] = $result['coin'];
+			  		}
+			  		echo '<a href="/kinect/logout.php" class="btn btn-default navbar-btn pull-right" id="sign-btn">登出</a><a href="/kinect/user.php" id="link-user-name" class="btn btn-primary navbar-btn pull-right"><span class="glyphicon glyphicon-user"></span> '.$_SESSION['nickName'].'<span class="badge">$'.$_SESSION['coin'].'</span></a>
 			  		';
 			  	}else{
-			  		echo '<a href="/kinect/login.php" class="btn btn-default navbar-btn pull-right">Sign in with Google</a>';
+			  		echo '<a href="/kinect/login.php" class="btn btn-default navbar-btn pull-right">用您的google帳號登入</a>';
 			  	}
 			  ?>	
 		  
@@ -229,7 +243,7 @@ include "connectSql.php";
     	}
     ?>
     <footer class="bs-footer">
-    	2013 Motionary <sup>beta</sup>  is powered by <a href="http://zigfu.com/" target="_blank">Zigfu</a>.
+    	2013 Motionary is powered by <a href="http://zigfu.com/" target="_blank">Zigfu</a>.
     </footer>
 
 </body>

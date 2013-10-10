@@ -28,7 +28,7 @@
 			if(count($vids)==0){
 				echo '{"status":2, "tag":"'.$_POST['tag'].'"}';
 			}else
-				echo '{"status":1, "identity":'.json_encode($vids).', "ytoutubeID":'.json_encode($ytoutubeID).', "requestTime":'.json_encode($requestTime).'}';
+				echo '{"status":1, "identity":'.json_encode($vids).', "ytoutubeID":'.json_encode($ytoutubeID).', "requestTime":'.json_encode($requestTime).', "tag":"'.$_POST['tag'].'"}';
 
 		}else{
 			echo '{"status":2, "tag":"'.$_POST['tag'].'"}';

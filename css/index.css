@@ -46,6 +46,9 @@ a>.label{
 	border-top: 1px solid #e5e5e5;
 }
 
+.thumbnail .caption{
+	padding: 5px;
+}
 
 .center{
 	margin: 0 auto;

@@ -38,9 +38,10 @@
       echo '{"status": 1, "alphaid":"'.$_POST['vid'].'"}';
   }else if(isGET('retrieve')){
       $mid = $_POST['mid'];
-      
       $result = mysql_query("SELECT * FROM motiondata WHERE mid=".$mid);
       $row = mysql_fetch_array($result);
+
+      $video = mysql_fetch_array(searchVideoByID($row['vid']));
 
       $directory = './skeletonData/';
       $filename = $directory.$row['fileName'];
@@ -52,7 +53,7 @@
        // to close file
       fclose($fp);
 
-      echo '{"status":1, "mtnArr":"'.$mtnStr.'", "contributor":"'.$row['onickName'].'"}';
+      echo '{"status":1, "mtnArr":"'.$mtnStr.'", "contributor":"'.$row['onickName'].'", "start_time":'.$video['start'].', "end_time":'.$video['end'].', "youtubeID":"'.$video['ytoutubeID'].'"}';
   }
 
 ?>

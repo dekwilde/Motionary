@@ -35,6 +35,7 @@
 
 	function updateUserBymail($mail,$arr){
 		return mysql_query("UPDATE userData SET nickName = '".$arr['nickName']."' WHERE email='".$mail."'");
+		$_SESSION['nickName'] = $arr['nickName'];
 	}
 
 	function updateRequest($arr){

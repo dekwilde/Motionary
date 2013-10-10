@@ -2,6 +2,7 @@ var isRecord = 0;
 var isReplay = 0;
 var index = 0;
 var mtnArr = new Array();
+var playerObj;
 
 $(function initialBtn(){
 	$('#record-btn').click(function(e){
@@ -12,6 +13,8 @@ $(function initialBtn(){
 			$("#instruction").html("Attention! "+ seconds + " seconds to start recording");
 			if (count == 0) {
 				console.log('count = 0');
+				playerObj.seekTo($('#start').html(), true);
+
 				$('#record-btn').html('Recording...');
 				isRecord = 1;
 				clearInterval(countdown);
@@ -96,4 +99,8 @@ function replayMtn(){
 	}
 	index++;
 	// console.log(index);
+}
+
+function onYouTubePlayerReady(playerId) {
+    playerObj = document.getElementById("myRecordPlayer");
 }
