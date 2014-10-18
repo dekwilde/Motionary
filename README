@@ -1,2 +1,9 @@
-It's a  project that use kinect and ZigFu.js to collect user's skeleton data for motion research
+## TITLE: Crowdsourcing 3D Motion Reconstruction ##
+
+Using Kinect to collect human's motion data and attempt to transform a 2D Video into 3D motion Data by crowdsourcing.
+
+Thanks for zigfu.js which makes it easier for us to build up this system :)
+
+
+__Program Author: Calvin Jeng, Richo Han, Dan Chen__
 
